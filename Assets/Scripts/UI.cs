@@ -19,12 +19,12 @@ public class UI : MonoBehaviour
 
     public void onClickPlay()
     {
-        SceneManager.LoadScene("MistyMountains");
+        SceneManager.LoadScene("GameSettings");
 
     }
     public void onClickSettings()
     {
-        SceneManager.LoadScene("MistyMountains");
+        SceneManager.LoadScene("GeneralSettings");
     }
 
     public void onClickControl()
