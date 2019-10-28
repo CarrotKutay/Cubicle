@@ -4,20 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/UI/MainMenu.unity
-    guid: 2c2b48ca726322f49976a23d2edbd8b3
-  - enabled: 1
-    path: Assets/Scenes/Levels/MistyMountains.unity
-    guid: d02bfe00be426ff49b6260fef98772ca
-  - enabled: 1
-    path: Assets/Scenes/UI/ControlScene.unity
-    guid: 1f71f70ac58ff984fb4e73bae36deabe
-  - enabled: 1
-    path: Assets/Scenes/UI/GameSettings.unity
-    guid: 6260677099d10d743868df8c4eef35d8
-  - enabled: 1
-    path: Assets/Scenes/UI/GeneralSettings.unity
-    guid: 6a7f84e0ae6cb254a9c9216fa5f18173
+  m_Scenes: []
   m_configObjects: {}
