@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        startPos.x = gameObject.transform.position.x;
-        startPos.y = gameObject.transform.position.y;
     }
 
     void FixedUpdate()
