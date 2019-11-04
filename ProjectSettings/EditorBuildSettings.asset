@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI/GeneralSettings.unity
     guid: cfd1024ac87c70d47ade146af1de9413
+  - enabled: 1
+    path: Assets/Scenes/Levels/Test.unity
+    guid: 71b86876abcad8b4887f2fa6c138ccff
+  - enabled: 1
+    path: Assets/Scenes/Levels/MistyMountains.unity
+    guid: 26e65ce9dd1cb84458be6e4d90dbc47a
   m_configObjects: {}

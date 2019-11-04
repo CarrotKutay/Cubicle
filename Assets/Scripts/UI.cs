@@ -5,18 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void onClickPlay()
     {
         SceneManager.LoadScene("GameSettings");
@@ -41,5 +29,7 @@ public class UI : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+
 }
 
