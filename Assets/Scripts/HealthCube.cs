@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HealthCube : MonoBehaviour
 {
-    float Value;
+    int Value;
+    float Scale;
 
     GameObject Body;
     Rigidbody RigidBody;
@@ -15,9 +16,10 @@ public class HealthCube : MonoBehaviour
     Shader Shader;
     Material HealthCubeMaterial;
     
-    void Init(int BodyScaleValue, Vector3 HitPosition)
+    void Init(int Value, Vector3 HitPosition)
     {
-        Value = 0.5f * (BodyScaleValue / 25f); // 0.5 = size of a normal Cube character = 100 % Health
+        this.Value = Value;
+        Scale = 0.5f * (Value / 25f); // 0.5 = size of a normal Cube character = 100 % Health
         Debug.Log(Value);
         
         if (HealthCubeMaterial != null) Debug.Log("Loaded successfully");
@@ -28,12 +30,12 @@ public class HealthCube : MonoBehaviour
         Body.transform.parent = transform; // remove once auto generation is possible
 
         //scaling gameObject
-        transform.localScale = new Vector3(Value, Value, Value);
+        transform.localScale = new Vector3(Scale, Scale, Scale);
 
         //adding components
-        gameObject.AddComponent<BoxCollider>();
+        Body.AddComponent<BoxCollider>();
         Body.AddComponent<Light>();
-        gameObject.AddComponent<MeshRenderer>();
+        Body.AddComponent<MeshRenderer>();
         
         //material setup
         HealthCubeRenderer = Body.GetComponent<MeshRenderer>();
@@ -63,6 +65,11 @@ public class HealthCube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider) { }
+        if (collision.collider.gameObject.GetComponent<Character>() != null)
+        {
+            GameObject Player = collision.collider.gameObject;
+            Player.GetComponent<Character>().UpdateHealth(Value);
+            Destroy(this.Body);
+        }
     }
 }
