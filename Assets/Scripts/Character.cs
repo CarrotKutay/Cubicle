@@ -25,11 +25,11 @@ public class Character : MonoBehaviour
     /// UpdateValue is the parameter by which the health value will change. The characters size will also change according to the health percentage it posesses.
     /// </summary>
     /// <param name="Updatevalue"></param>
-    void UpdateHealth(int UpdateValue)
+    public void UpdateHealth(int UpdateValue)
     {
         Health += UpdateValue;
-        float scaleSize = transform.localScale.x + UpdateValue/2f;
-        transform.localScale.Set(scaleSize, scaleSize, scaleSize);
+        float scaleSize = transform.localScale.x + (UpdateValue/200f);
+        transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
 
     /// <summary>
