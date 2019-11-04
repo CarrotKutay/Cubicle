@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector2.up * 0;
             extraJumps--;
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -56,7 +55,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             extraJumps = 2;
-            Debug.Log("Bodne berührt");
+            Debug.Log("Boden berührt");
         }
     }
 }
