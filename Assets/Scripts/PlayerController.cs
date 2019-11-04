@@ -15,11 +15,15 @@ public class PlayerController : MonoBehaviour
 
     private int extraJumps = 2;
 
+    // private int playerLifes = 3;
+
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        startPos.x = gameObject.transform.position.x;
+        startPos.y = gameObject.transform.position.y;
     }
 
     void FixedUpdate()
@@ -44,8 +48,15 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.UpArrow) && extraJumps == 0)
         {
             rb.velocity = Vector2.up * 0;
-            extraJumps--;
         }
+
+        // Respawn bei mehreren Leben
+        /*
+        if (gameObject.transform.position.y < -5.0f)
+        {
+            Invoke("respawn", 2.0f);
+        }
+        */
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,7 +64,11 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             extraJumps = 2;
-            Debug.Log("Boden berührt");
         }
+    }
+
+    private void respawn()
+    {
+        gameObject.transform.position = startPos;
     }
 }
