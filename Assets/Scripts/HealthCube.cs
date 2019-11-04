@@ -25,14 +25,14 @@ public class HealthCube : MonoBehaviour
         //adding cube
         Body = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Body.transform.position = HitPosition;
-        Body.transform.parent = transform;
+        Body.transform.parent = transform; // remove once auto generation is possible
 
         //scaling gameObject
         transform.localScale = new Vector3(Value, Value, Value);
 
         //adding components
         gameObject.AddComponent<BoxCollider>();
-        gameObject.AddComponent<Light>();
+        Body.AddComponent<Light>();
         gameObject.AddComponent<MeshRenderer>();
         
         //material setup
@@ -42,7 +42,9 @@ public class HealthCube : MonoBehaviour
         //Collider
         HealthCubeCollider = GetComponent<BoxCollider>();
         //Light
-        PointLightGlow = GetComponent<Light>();
+        PointLightGlow = Body.GetComponent<Light>();
+        PointLightGlow.transform.parent = Body.transform;
+        PointLightGlow.transform.localPosition = Vector3.zero;
         PointLightGlow.type = LightType.Point;
         PointLightGlow.color = new Color(54/256f, 170/256f, 10/256f);
         PointLightGlow.range = 4;
