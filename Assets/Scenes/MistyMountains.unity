@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 1223859109}
   m_Layer: 0
   m_Name: Pole 2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -665,6 +665,8 @@ GameObject:
   - component: {fileID: 1240858434}
   - component: {fileID: 1240858433}
   - component: {fileID: 1240858438}
+  - component: {fileID: 1240858440}
+  - component: {fileID: 1240858439}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Player
@@ -686,7 +688,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!65 &1240858434
 BoxCollider:
@@ -774,6 +776,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411ead28aef21dd4c8a0cc9dc4ffdf22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1240858439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240858432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3375bb9ad0ed545b057ff5a8a94c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 3
+--- !u!114 &1240858440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240858432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755f819c4527c0a4c9484241be725325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7
+  jumpForce: 13
 --- !u!1 &1829623551
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,18 +31,14 @@ public class HealthCube : MonoBehaviour
         transform.localScale = new Vector3(Value, Value, Value);
 
         //adding components
-        gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<BoxCollider>();
         gameObject.AddComponent<Light>();
         gameObject.AddComponent<MeshRenderer>();
-
+        
         //material setup
         HealthCubeRenderer = Body.GetComponent<MeshRenderer>();
         HealthCubeRenderer.enabled = true;
         HealthCubeRenderer.sharedMaterial = HealthCubeMaterial;
-        //Rigidbody
-        RigidBody = GetComponent<Rigidbody>();
-        RigidBody.constraints = RigidbodyConstraints.FreezePositionZ;
         //Collider
         HealthCubeCollider = GetComponent<BoxCollider>();
         //Light
@@ -50,11 +46,21 @@ public class HealthCube : MonoBehaviour
         PointLightGlow.type = LightType.Point;
         PointLightGlow.color = new Color(54/256f, 170/256f, 10/256f);
         PointLightGlow.range = 4;
-}
+
+        //adding RigidBody
+        gameObject.AddComponent<Rigidbody>();
+        RigidBody = GetComponent<Rigidbody>();
+        RigidBody.constraints = RigidbodyConstraints.FreezePositionZ;
+    }
 
     private void Start()
     {
         HealthCubeMaterial = Resources.Load<Material>("TranslucentMat_green");
         Init(10, new Vector3(0,-2,0));
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider) { }
     }
 }
