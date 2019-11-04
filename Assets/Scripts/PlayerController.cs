@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        startPos.x = gameObject.transform.position.x;
-        startPos.y = gameObject.transform.position.y;
     }
 
     void FixedUpdate()
@@ -56,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             extraJumps = 2;
-            Debug.Log("Bodne berührt");
+            Debug.Log("Boden berührt");
         }
     }
 }

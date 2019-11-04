@@ -42,6 +42,7 @@ public class HealthCube : MonoBehaviour
         HealthCubeRenderer.sharedMaterial = HealthCubeMaterial;
         //Rigidbody
         RigidBody = GetComponent<Rigidbody>();
+        RigidBody.constraints = RigidbodyConstraints.FreezePositionZ;
         //Collider
         HealthCubeCollider = GetComponent<BoxCollider>();
         //Light
