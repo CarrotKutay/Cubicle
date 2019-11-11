@@ -1,6 +1,6 @@
-# StickFigureFight
+# Cubicle
 
-A 2.5D Stick Figure Fighting Game using Unity as a Game Engine.
+A 2.5D Cube Figure Fighting Game using Unity as a Game Engine.
 
 - Moddeling szenes in 3D for a more realisitc design 
 - The game itself will be playable in 2D perspective and feature a classical arena battle system
@@ -12,9 +12,9 @@ Features to implement:
 * [ ] Stage design
 * [ ] UI Design
 * [ ] Finding Assets
-* [ ] Input System Design
-* [ ] Weapon System Design
-* [ ] Physics System
+* [ x ] Input System Design
+* [ x ] Weapon System Design
+* [ x ] Physics System
 
 ***
 
