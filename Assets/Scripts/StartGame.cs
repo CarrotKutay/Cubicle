@@ -24,7 +24,7 @@ public class StartGame : MonoBehaviour
         }
         else if (level2.isOn)
         {
-            SceneManager.LoadScene("Test");
+            SceneManager.LoadScene("TommyStage");
         }
         // Level 3...
     }
