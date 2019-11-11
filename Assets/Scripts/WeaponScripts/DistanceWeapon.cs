@@ -9,7 +9,6 @@ public class DistanceWeapon : MonoBehaviour
     protected int Damage { get; set; }
     protected float FiringRate { get; set; }
     protected int FiringStrength { get; set; }
-    protected List<Projectile> PT;
     protected Vector3 firingDirection;
 
     /// <summary>
@@ -20,6 +19,11 @@ public class DistanceWeapon : MonoBehaviour
     private void Reload()
     {
         CurrentAmmunition = Ammunition;
+    }
+
+    public int getDamage()
+    {
+        return Damage;
     }
 
     /// <summary>

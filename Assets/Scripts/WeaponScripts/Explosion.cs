@@ -10,9 +10,16 @@ public class Explosion : MonoBehaviour
     private int PieceSize = 5; // 1 Dimension
     private float ExplosionForce = 70f;
 
+    private float radius;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (GetComponentInParent<Projectile>() != null)
+        {
+            Projectile pt = GetComponentInParent<Projectile>();
+            radius = pt.ExplosionRadius;
+        }
         //calculate pivot distance
         CubesPivotDistance = CubePieceSize * PieceSize / 2;
         CubesPivot = new Vector3(CubesPivotDistance, CubesPivotDistance, CubesPivotDistance);
@@ -21,14 +28,14 @@ public class Explosion : MonoBehaviour
     public void Explode(Vector3 HitPosition)
     {
         this.HitPosition = HitPosition;
-        
+
         //loop creating explosion particles
 
-        for(int y = 0; y < PieceSize; y++)
+        for (int y = 0; y < PieceSize; y++)
         {
-            for(int x = 0; x < PieceSize; x++)
+            for (int x = 0; x < PieceSize; x++)
             {
-                for(int z = 0; z < PieceSize; z++)
+                for (int z = 0; z < PieceSize; z++)
                 {
                     CreatePieces(x, y, z);
                 }
@@ -37,12 +44,12 @@ public class Explosion : MonoBehaviour
 
         //Add explosion
         Collider[] colliders = Physics.OverlapSphere(HitPosition, PieceSize);
-        foreach(Collider c in colliders)
+        foreach (Collider c in colliders)
         {
             Rigidbody rb = c.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.AddExplosionForce(ExplosionForce, HitPosition, PieceSize, 0.4f);
+                rb.AddExplosionForce(ExplosionForce, HitPosition, radius, 0.4f);
             }
         }
     }

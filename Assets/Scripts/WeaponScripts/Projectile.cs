@@ -8,8 +8,13 @@ public class Projectile : MonoBehaviour
     protected Rigidbody rb;
     protected BoxCollider ProjectileCollider;
     protected MeshRenderer rend;
-    protected float TimeofCreation;
+    protected int Damage;
+    public float ExplosionRadius { get; set; }
 
+    public void addDamage(int value)
+    {
+        Damage = value;
+    }
     protected void Init()
     {
 
@@ -37,7 +42,6 @@ public class Projectile : MonoBehaviour
     }
     private void Start()
     {
-        TimeofCreation = Time.time;
         StartCoroutine(waitToClean());
     }
 }

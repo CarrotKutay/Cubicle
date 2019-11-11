@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class Character : MonoBehaviour
 {
@@ -10,14 +9,29 @@ public class Character : MonoBehaviour
     private float Speed;
     private bool _holdingWeapon;
     private GameObject WeaponSlot1, WeaponSlot2;
+    private bool checkingHealth;
 
     void DropWeapon() { }
 
     void ThrowWeapon() { }
 
-    void GettingHit(int ByValue)
+    private IEnumerator healthcare()
     {
-        GameObject.CreatePrimitive(PrimitiveType.Cube);
+        checkingHealth = true;
+
+        if (iAmDead())
+        {
+            Debug.Log("You died");
+            Destroy(this.gameObject);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        checkingHealth = false;
+    }
+
+    private bool iAmDead()
+    {
+        return Health <= 0;
     }
 
     /// <summary>
@@ -27,8 +41,10 @@ public class Character : MonoBehaviour
     /// <param name="Updatevalue"></param>
     public void UpdateHealth(int UpdateValue)
     {
+        Debug.Log("Updated health by " + UpdateValue);
         Health += UpdateValue;
-        float scaleSize = transform.localScale.x + (UpdateValue/200f);
+        float newScale = transform.localScale.x + (UpdateValue / 200f);
+        float scaleSize = newScale < 0.25f ? 0.25f : newScale;
         transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
 
@@ -40,6 +56,7 @@ public class Character : MonoBehaviour
         Health = 100;
         Speed = 1;
         _holdingWeapon = false;
+        checkingHealth = false;
     }
 
     // Start is called before the first frame update
@@ -51,7 +68,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!checkingHealth) StartCoroutine(healthcare());
     }
 
 

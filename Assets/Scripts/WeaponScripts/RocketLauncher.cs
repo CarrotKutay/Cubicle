@@ -16,11 +16,16 @@ public class RocketLauncher : DistanceWeapon
             //create Projectile Body PTBody
             GameObject PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
             PTBody.AddComponent<RocketLauncherProjectile>();
+            PTBody.GetComponent<RocketLauncherProjectile>().addDamage(Damage);
             PTBody.transform.position = transform.position;
             PTBody.GetComponent<RocketLauncherProjectile>().BuildProjectile();
+            PTBody.transform.Rotate(0, 0, firingDirection.x / firingDirection.y);
 
             //Fire Projectile
-            PTBody.GetComponent<Rigidbody>().AddForceAtPosition(firingDirection * FiringStrength, PTBody.transform.position);
+            Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
+            rigidbody.mass = 1.5f;
+            rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+            rigidbody.AddForceAtPosition(firingDirection * FiringStrength, PTBody.transform.position);
 
             // Remove Fired Projectile
             this.CurrentAmmunition = CurrentAmmunition - 1;
@@ -31,7 +36,6 @@ public class RocketLauncher : DistanceWeapon
     private IEnumerator checkButtonFired()
     {
         isFiring = true;
-        Debug.Log("checked button fire");
 
         if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {
