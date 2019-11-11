@@ -5,19 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject mainMenuUI;
+
+    [SerializeField]
+    private GameObject gameSettingsUI;
+
+    [SerializeField]
+    private GameObject controlUI;
+
+
     public void onClickPlay()
     {
-        SceneManager.LoadScene("GameSettings");
-
-    }
-    public void onClickSettings()
-    {
-        SceneManager.LoadScene("GeneralSettings");
+        mainMenuUI.SetActive(false);
+        gameSettingsUI.SetActive(true);
     }
 
     public void onClickControl()
     {
-        SceneManager.LoadScene("ControlScene");
+        mainMenuUI.SetActive(false);
+        controlUI.SetActive(true);
     }
 
     public void onClickQuit()
@@ -27,9 +34,9 @@ public class UI : MonoBehaviour
 
     public void onClickBackToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        mainMenuUI.SetActive(true);
+        controlUI.SetActive(false);
+        gameSettingsUI.SetActive(false);
     }
-
-
 }
 

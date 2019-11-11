@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: 1041840145}
   - component: {fileID: 1041840144}
   - component: {fileID: 1041840147}
+  - component: {fileID: 1041840148}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1340,6 +1341,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenuUI: {fileID: 1270653716}
+--- !u!114 &1041840148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041840143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c44a968e2f2d6948ba14e6ba96842e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftPlatform: {fileID: 15746971}
+  rightPlatform: {fileID: 143768800}
 --- !u!1 &1223859107
 GameObject:
   m_ObjectHideFlags: 0
