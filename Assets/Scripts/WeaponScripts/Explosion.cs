@@ -6,9 +6,9 @@ public class Explosion : MonoBehaviour
 {
     private Vector3 HitPosition, CubesPivot;
     private float CubesPivotDistance;
-    private float CubePieceSize = 0.08f;
+    private float CubePieceSize = 0.09f;
     private int PieceSize = 5; // 1 Dimension
-    private float ExplosionForce = 80f;
+    private float ExplosionForce = 70f;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +50,7 @@ public class Explosion : MonoBehaviour
     private void CreatePieces(int x, int y, int z)
     {
         GameObject Piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Piece.AddComponent<ExplosionParticle>();
 
         //set pieces position and scale
         Piece.transform.position = HitPosition + new Vector3(CubePieceSize * x, CubePieceSize * y, CubePieceSize * z) - CubesPivot;
