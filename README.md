@@ -12,9 +12,9 @@ Features to implement:
 * [ ] Stage design
 * [ ] UI Design
 * [ ] Finding Assets
-* [ x ] Input System Design
-* [ x ] Weapon System Design
-* [ x ] Physics System
+* [x] Input System Design
+* [x] Weapon System Design
+* [x] Physics System
 
 ***
 
