@@ -4,14 +4,4 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MistyMountains.unity
-    guid: 088452044878866469248556d41fd2b7
-  - enabled: 1
-    path: Assets/Scenes/UI/MainMenu.unity
-    guid: 5c05bf5009c039d4bb3dd16b9e4131fb
-  - enabled: 1
-    path: Assets/Scenes/Levels/TommyStage.unity
-    guid: 71b86876abcad8b4887f2fa6c138ccff
   m_configObjects: {}

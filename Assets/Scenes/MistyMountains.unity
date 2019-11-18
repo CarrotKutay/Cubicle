@@ -242,7 +242,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 223196289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f5e58082d534e44a23fa1273a58d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d6bfdfc9a2c3714e9184a522975770c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &223196291
@@ -725,9 +725,9 @@ GameObject:
   - component: {fileID: 1240858435}
   - component: {fileID: 1240858434}
   - component: {fileID: 1240858433}
-  - component: {fileID: 1240858438}
   - component: {fileID: 1240858440}
   - component: {fileID: 1240858439}
+  - component: {fileID: 1240858438}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Player
@@ -834,9 +834,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240858432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411ead28aef21dd4c8a0cc9dc4ffdf22, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c69743b665ebaa439de9ac304ee19a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 7
+  jumpForce: 13
 --- !u!114 &1240858439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +848,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240858432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a3375bb9ad0ed545b057ff5a8a94c0f, type: 3}
+  m_Script: {fileID: 11500000, guid: ed31744dfc8a93b46a65a7698efe9642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gravityScale: 3
@@ -859,11 +861,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240858432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 755f819c4527c0a4c9484241be725325, type: 3}
+  m_Script: {fileID: 11500000, guid: f2bc5d7f4b4178342b9ebad82959a310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  jumpForce: 13
 --- !u!1 &1829623551
 GameObject:
   m_ObjectHideFlags: 0

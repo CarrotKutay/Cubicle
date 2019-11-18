@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Character : MonoBehaviour
 {
+    private float hi;
+
 
     private int Health;
     private string Name;
@@ -188,5 +190,4 @@ public class Character : MonoBehaviour
             }
         }
     }
-
 }
