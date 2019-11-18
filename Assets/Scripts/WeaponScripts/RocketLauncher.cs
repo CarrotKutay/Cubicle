@@ -5,27 +5,38 @@ using UnityEngine;
 public class RocketLauncher : DistanceWeapon
 {
 
+    GameObject PTBody;
 
     private void WeaponFired()
     {
         if (CurrentAmmunition > 0)
         {
-            //create Projectile Body PTBody
-            GameObject PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            PTBody.AddComponent<RocketLauncherProjectile>();
-            PTBody.GetComponent<RocketLauncherProjectile>().addDamage(Damage);
-            PTBody.transform.position = transform.position;// + Vector3.forward;
-            PTBody.GetComponent<RocketLauncherProjectile>().BuildProjectile();
-
-            //Fire Projectile
-            Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
-            rigidbody.mass = 1.5f;
-            rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-            rigidbody.AddForceAtPosition(FiringDirection * FiringStrength, PTBody.transform.position);
+            addProjectile();
 
             // Remove Fired Projectile
             this.CurrentAmmunition = CurrentAmmunition - 1;
         }
+    }
+
+    private void addProjectile()
+    {
+        //create Projectile Body PTBody
+        PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        PTBody.AddComponent<RocketLauncherProjectile>();
+        PTBody.GetComponent<RocketLauncherProjectile>().addDamage(Damage);
+        PTBody.GetComponent<RocketLauncherProjectile>().FiredFrom = transform.parent.parent.gameObject.GetComponent<Character>().PersonalLayer;
+        PTBody.transform.position = transform.parent.parent.position;
+        PTBody.transform.parent = null;
+        PTBody.GetComponent<RocketLauncherProjectile>().BuildProjectile();
+    }
+
+    private void fireProjectile()
+    {
+        //Fire Projectile
+        Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
+        rigidbody.mass = 1.5f;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+        rigidbody.AddForceAtPosition(FiringDirection * FiringStrength, PTBody.transform.position);
     }
 
 

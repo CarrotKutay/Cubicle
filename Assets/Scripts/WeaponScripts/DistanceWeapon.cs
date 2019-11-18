@@ -5,6 +5,7 @@ using UnityEngine;
 public class DistanceWeapon : MonoBehaviour
 {
     private bool isFiring, equipped, iS_WEAPON = true;
+    private LayerMask heldIn;
     protected int Ammunition { get; set; }
     protected int CurrentAmmunition { get; set; }
     protected int Damage { get; set; }
@@ -15,6 +16,7 @@ public class DistanceWeapon : MonoBehaviour
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
     public bool IS_WEAPON { get => iS_WEAPON; }
     public bool Equipped { get => equipped; set => equipped = value; }
+    public LayerMask HeldIn { get => heldIn; set => heldIn = value; }
 
     private Vector3 firingDirection;
     private Rigidbody rb;
