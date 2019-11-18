@@ -5,27 +5,23 @@ using UnityEngine;
 public class RocketLauncher : DistanceWeapon
 {
 
-    private bool isFiring = false;
 
     private void WeaponFired()
     {
         if (CurrentAmmunition > 0)
         {
-            //Get Firing Direction
-            getCursorPosition();
             //create Projectile Body PTBody
             GameObject PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
             PTBody.AddComponent<RocketLauncherProjectile>();
             PTBody.GetComponent<RocketLauncherProjectile>().addDamage(Damage);
-            PTBody.transform.position = transform.position;
+            PTBody.transform.position = transform.position;// + Vector3.forward;
             PTBody.GetComponent<RocketLauncherProjectile>().BuildProjectile();
-            PTBody.transform.Rotate(0, 0, firingDirection.x / firingDirection.y);
 
             //Fire Projectile
             Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
             rigidbody.mass = 1.5f;
             rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-            rigidbody.AddForceAtPosition(firingDirection * FiringStrength, PTBody.transform.position);
+            rigidbody.AddForceAtPosition(FiringDirection * FiringStrength, PTBody.transform.position);
 
             // Remove Fired Projectile
             this.CurrentAmmunition = CurrentAmmunition - 1;
@@ -35,7 +31,7 @@ public class RocketLauncher : DistanceWeapon
 
     private IEnumerator checkButtonFired()
     {
-        isFiring = true;
+        IsFiring = true;
 
         if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {
@@ -43,12 +39,12 @@ public class RocketLauncher : DistanceWeapon
             yield return new WaitForSeconds(FiringRate);
         }
 
-        isFiring = false;
+        IsFiring = false;
     }
 
-    private void Update()
+    protected override void shoot()
     {
-        if (!isFiring)
+        if (!IsFiring)
         {
             StartCoroutine(checkButtonFired());
         }

@@ -7,14 +7,102 @@ public class Character : MonoBehaviour
     private int Health;
     private string Name;
     private float Speed;
-    private bool _holdingWeapon;
+    ///<summary>
+    /// Boolean Array to indicate if Weapon is hold in Slot 1 (holdingWeapon[0]) or Slot 2 (holdingWeapon[1]). Might be opsolete in further updates -> possible to perform Weapon actions in a class "Slot"
+    /// <param name="holdingWeapon"></param>
+    ///</summary>
+    private bool[] holdingWeapon;
+
+    /// <summary>
+    /// we are providing the option of holding two weapons which are interchangeable for the player to choose from and hold while carrying
+    /// <param name="WeaponSlot1"> </param>
+    /// <param name="WeaponSlot2"> </param>
+    /// </summary>
     private GameObject WeaponSlot1, WeaponSlot2;
+    /// <summary>
+    /// ActiveWeapon will be the Weapon the player performs actions with, it is interchangable bewteen "WeaponSlot1" and "WeaponSlot2"
+    /// <param name="ActiveWeapon"> </param>
+    /// </summary>
+    private GameObject activeWeapon;
     private bool checkingHealth;
 
+    public GameObject ActiveWeapon { get => activeWeapon; set => activeWeapon = value; }
+
+    void equipWeapon(GameObject Weapon)
+    {
+        Weapon.GetComponent<DistanceWeapon>().Equipped = true;
+        Weapon.transform.parent = this.transform;
+        Weapon.GetComponent<Rigidbody>().useGravity = false;
+        Weapon.GetComponent<Rigidbody>().MovePosition(Vector3.back);
+        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        if (WeaponSlot1 == null) // equip weapon on slot 1 if empty
+        {
+            WeaponSlot1 = Weapon;
+            holdingWeapon[0] = true;
+            if (!holdingWeapon[1]) { ActiveWeapon = WeaponSlot1; }
+        }
+        else if (WeaponSlot2 == null) // equip weapon on slot 2 if empty
+        {
+            WeaponSlot2 = Weapon;
+            holdingWeapon[1] = true;
+            if (!holdingWeapon[0]) { ActiveWeapon = WeaponSlot2; }
+        }
+        else
+        {
+            if (WeaponSlot1.Equals(ActiveWeapon))
+            {
+                WeaponSlot1 = Weapon;
+            }
+            else
+            {
+                WeaponSlot2 = Weapon;
+            }
+        }
+
+    }
+    ///<summary>
+    /// Method to set active weapon to the given parameter. Weapon should only be set active via this method.
+    /// <param name="Weapon"></param>
+    ///</summary>
+    private void setActiveWeapon(GameObject Weapon)
+    {
+
+    }
+
+    ///<summary>
+    /// Method to change the active Weapon from either one tóf the Weapon Slots to the other
+    ///</summary>
+    void changeActiveWeapon()
+    {
+        if (ActiveWeapon == WeaponSlot1)
+        {
+            WeaponSlot1.gameObject.SetActive(false);
+            WeaponSlot2.gameObject.SetActive(true);
+            ActiveWeapon = WeaponSlot2;
+        }
+        else if (ActiveWeapon == WeaponSlot2)
+        {
+            WeaponSlot1.gameObject.SetActive(true);
+            WeaponSlot2.gameObject.SetActive(false);
+            ActiveWeapon = WeaponSlot1;
+        }
+    }
+
+    public void pickUp(GameObject obj)
+    {
+
+        if (obj.GetComponent<DistanceWeapon>().IS_WEAPON)
+        {
+            equipWeapon(obj);
+        }
+    }
     void DropWeapon() { }
 
     void ThrowWeapon() { }
 
+    ///<summary>
+    /// Coroutine checking if <see cref="this.Health"/>  is below or at 0
+    ///</summary>
     private IEnumerator healthcare()
     {
         checkingHealth = true;
@@ -55,7 +143,9 @@ public class Character : MonoBehaviour
     {
         Health = 100;
         Speed = 1;
-        _holdingWeapon = false;
+        holdingWeapon = new bool[2];
+        holdingWeapon[1] = false;
+        holdingWeapon[0] = false;
         checkingHealth = false;
     }
 
@@ -71,5 +161,15 @@ public class Character : MonoBehaviour
         if (!checkingHealth) StartCoroutine(healthcare());
     }
 
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.layer != LayerMask.GetMask("Arena"))
+        {
+            if (Input.GetButtonDown("PickUp"))
+            {
+                pickUp(other.gameObject);
+            }
+        }
+    }
 
 }
