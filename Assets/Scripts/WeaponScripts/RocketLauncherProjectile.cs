@@ -16,6 +16,7 @@ public class RocketLauncherProjectile : Projectile
         //* add explosive radius to projectile
         ExplosionRadius = 5f;
         //* adding explosive behaviour to rocketlauncher projectiles */
+
         gameObject.AddComponent<Explosion>();
     }
     /**
