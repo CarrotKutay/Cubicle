@@ -24,22 +24,24 @@ public class RocketLauncherProjectile : Projectile
         */
     private void OnCollisionEnter(Collision collision)
     {
-        if (!exploded)
+        if (collision.gameObject.layer != LayerMask.GetMask("Player1"))
         {
-            exploded = true;
-            //adding explosion at point of collision
-            Vector3 collisionPoint = collision.GetContact(0).point;
-            GetComponent<Explosion>().Explode(collisionPoint);
+            if (!exploded)
+            {
+                exploded = true;
+                //adding explosion at point of collision
+                Vector3 collisionPoint = collision.GetContact(0).point;
+                GetComponent<Explosion>().Explode(collisionPoint);
 
-            //* Adding a Triggerfield which checks for player objects inside of it
-            GameObject field = new GameObject();
-            field.transform.position = collisionPoint;
-            field.AddComponent<TriggerField>();
-            field.GetComponent<TriggerField>().Init(Damage, ExplosionRadius);
+                //* Adding a Triggerfield which checks for player objects inside of it
+                GameObject field = new GameObject();
+                field.transform.position = collisionPoint;
+                field.AddComponent<TriggerField>();
+                field.GetComponent<TriggerField>().Init(Damage, ExplosionRadius);
 
-            cleanup();
+                cleanup();
+            }
         }
-
     }
 
     class TriggerField : MonoBehaviour

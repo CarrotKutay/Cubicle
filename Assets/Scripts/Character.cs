@@ -12,7 +12,7 @@ public class Character : MonoBehaviour
     /// <param name="holdingWeapon"></param>
     ///</summary>
     private bool[] holdingWeapon;
-
+    private LayerMask personalLayer;
     /// <summary>
     /// we are providing the option of holding two weapons which are interchangeable for the player to choose from and hold while carrying
     /// <param name="WeaponSlot1"> </param>
@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
     private bool checkingHealth;
 
     public GameObject ActiveWeapon { get => activeWeapon; set => activeWeapon = value; }
+    public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
 
     void equipWeapon(GameObject Weapon)
     {
@@ -56,7 +57,7 @@ public class Character : MonoBehaviour
                 Weapon.transform.parent = WeaponSlot2.transform;
             }
         }
-
+        Weapon.GetComponent<DistanceWeapon>().HeldIn = PersonalLayer;
         Weapon.transform.localPosition = Vector3.zero;
         Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 
@@ -149,6 +150,8 @@ public class Character : MonoBehaviour
         holdingWeapon[1] = false;
         holdingWeapon[0] = false;
         checkingHealth = false;
+        PersonalLayer = LayerMask.GetMask("Player1");
+        gameObject.layer = personalLayer.value;
     }
 
     private void initSlots()
