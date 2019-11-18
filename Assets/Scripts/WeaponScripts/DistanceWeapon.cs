@@ -50,8 +50,7 @@ public class DistanceWeapon : MonoBehaviour
         gameObject.AddComponent<Rigidbody>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezePositionZ;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX;
-        rb.constraints = RigidbodyConstraints.FreezeRotationY;
+        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
         isFiring = false;
         equipped = false;
         Reload();
@@ -63,9 +62,7 @@ public class DistanceWeapon : MonoBehaviour
     private void aimWeapon()
     {
         Transform weaponBody = this.gameObject.transform;
-        float angle = Vector3.Angle(weaponBody.position + Vector3.forward, Vector3.right);
-        rb.MoveRotation(Quaternion.Euler(0, 0, angle));
-        //rb.MovePosition(transform.position + Vector3.back);
+        weaponBody.LookAt(firingDirection);
     }
 
     protected void Update()

@@ -58,7 +58,7 @@ public class Character : MonoBehaviour
         }
 
         Weapon.transform.localPosition = Vector3.zero;
-        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 
     }
     ///<summary>
