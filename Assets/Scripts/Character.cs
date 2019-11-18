@@ -31,19 +31,17 @@ public class Character : MonoBehaviour
     void equipWeapon(GameObject Weapon)
     {
         Weapon.GetComponent<DistanceWeapon>().Equipped = true;
-        Weapon.transform.parent = this.transform;
         Weapon.GetComponent<Rigidbody>().useGravity = false;
-        Weapon.GetComponent<Rigidbody>().MovePosition(Vector3.back);
-        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
         if (WeaponSlot1 == null) // equip weapon on slot 1 if empty
         {
-            WeaponSlot1 = Weapon;
+            Weapon.transform.parent = WeaponSlot1.transform;
             holdingWeapon[0] = true;
             if (!holdingWeapon[1]) { ActiveWeapon = WeaponSlot1; }
         }
         else if (WeaponSlot2 == null) // equip weapon on slot 2 if empty
         {
-            WeaponSlot2 = Weapon;
+            Weapon.transform.parent = WeaponSlot2.transform; ;
             holdingWeapon[1] = true;
             if (!holdingWeapon[0]) { ActiveWeapon = WeaponSlot2; }
         }
@@ -51,13 +49,16 @@ public class Character : MonoBehaviour
         {
             if (WeaponSlot1.Equals(ActiveWeapon))
             {
-                WeaponSlot1 = Weapon;
+                Weapon.transform.parent = WeaponSlot1.transform;
             }
             else
             {
-                WeaponSlot2 = Weapon;
+                Weapon.transform.parent = WeaponSlot2.transform;
             }
         }
+
+        Weapon.transform.localPosition = Vector3.zero;
+        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
 
     }
     ///<summary>
@@ -143,10 +144,23 @@ public class Character : MonoBehaviour
     {
         Health = 100;
         Speed = 1;
+        initSlots();
         holdingWeapon = new bool[2];
         holdingWeapon[1] = false;
         holdingWeapon[0] = false;
         checkingHealth = false;
+    }
+
+    private void initSlots()
+    {
+        WeaponSlot1 = new GameObject();
+        WeaponSlot2 = new GameObject();
+        WeaponSlot1.name = "Slot1";
+        WeaponSlot2.name = "Slot2";
+        WeaponSlot1.transform.parent = transform;
+        WeaponSlot2.transform.parent = transform;
+        WeaponSlot1.transform.localPosition = Vector3.back;
+        WeaponSlot2.transform.localPosition = Vector3.back;
     }
 
     // Start is called before the first frame update
