@@ -34,6 +34,7 @@ public class Character : MonoBehaviour
     void equipWeapon(GameObject Weapon)
     {
         Weapon.GetComponent<DistanceWeapon>().Equipped = true;
+        Weapon.layer = personalLayer;
         Weapon.GetComponent<Rigidbody>().useGravity = false;
 
         if (WeaponSlot1 == null) // equip weapon on slot 1 if empty
@@ -59,17 +60,8 @@ public class Character : MonoBehaviour
                 Weapon.transform.parent = WeaponSlot2.transform;
             }
         }
-        Weapon.GetComponent<DistanceWeapon>().HeldIn = PersonalLayer;
         Weapon.transform.localPosition = Vector3.zero;
-        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
-
-    }
-    ///<summary>
-    /// Method to set active weapon to the given parameter. Weapon should only be set active via this method.
-    /// <param name="Weapon"></param>
-    ///</summary>
-    private void setActiveWeapon(GameObject Weapon)
-    {
+        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
 
     }
 
@@ -147,13 +139,14 @@ public class Character : MonoBehaviour
     {
         Health = 100;
         Speed = 1;
+        personalLayer = LayerMask.NameToLayer("Player1");
         initSlots();
         holdingWeapon = new bool[2];
         holdingWeapon[1] = false;
         holdingWeapon[0] = false;
         checkingHealth = false;
-        PersonalLayer = LayerMask.GetMask("Player1");
-        gameObject.layer = personalLayer.value;
+        gameObject.layer = personalLayer;
+        this.name = "Player";
     }
 
     private void initSlots()
@@ -166,6 +159,8 @@ public class Character : MonoBehaviour
         WeaponSlot2.transform.parent = transform;
         WeaponSlot1.transform.localPosition = Vector3.back;
         WeaponSlot2.transform.localPosition = Vector3.back;
+        WeaponSlot1.layer = personalLayer;
+        WeaponSlot2.layer = personalLayer;
     }
 
     // Start is called before the first frame update

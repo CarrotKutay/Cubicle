@@ -12,7 +12,7 @@ public class RocketLauncher : DistanceWeapon
         if (CurrentAmmunition > 0)
         {
             addProjectile();
-
+            fireProjectile();
             // Remove Fired Projectile
             this.CurrentAmmunition = CurrentAmmunition - 1;
         }
@@ -23,11 +23,13 @@ public class RocketLauncher : DistanceWeapon
         //create Projectile Body PTBody
         PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
         PTBody.AddComponent<RocketLauncherProjectile>();
-        PTBody.GetComponent<RocketLauncherProjectile>().addDamage(Damage);
-        PTBody.GetComponent<RocketLauncherProjectile>().FiredFrom = transform.parent.parent.gameObject.GetComponent<Character>().PersonalLayer;
+        RocketLauncherProjectile projectile = PTBody.GetComponent<RocketLauncherProjectile>();
+        projectile.addDamage(Damage);
+        projectile.FiredFrom = gameObject.layer;
         PTBody.transform.position = transform.parent.parent.position;
         PTBody.transform.parent = null;
-        PTBody.GetComponent<RocketLauncherProjectile>().BuildProjectile();
+        projectile.BuildProjectile();
+        PTBody.name = "RocketLauncherProjectile";
     }
 
     private void fireProjectile()
@@ -36,7 +38,7 @@ public class RocketLauncher : DistanceWeapon
         Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-        rigidbody.AddForceAtPosition(FiringDirection * FiringStrength, PTBody.transform.position);
+        rigidbody.AddForce(FiringDirection);
     }
 
 
@@ -63,7 +65,7 @@ public class RocketLauncher : DistanceWeapon
 
     private void Start()
     {
-        Init(10, 15, 500, 2);
+        Init(10, 15, 1, 2);
         StartCoroutine(checkButtonFired());
     }
 }

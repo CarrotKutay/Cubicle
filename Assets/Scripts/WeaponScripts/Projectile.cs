@@ -19,7 +19,6 @@ public class Projectile : MonoBehaviour
     }
     protected void Init()
     {
-
         //create projectile
         gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<BoxCollider>();
@@ -29,6 +28,7 @@ public class Projectile : MonoBehaviour
         ProjectileCollider = GetComponent<BoxCollider>();
         rend = GetComponent<MeshRenderer>();
         rend.material = Resources.Load<Material>("ProjectileMaterial");
+        gameObject.name = "Projectile";
     }
 
     /**

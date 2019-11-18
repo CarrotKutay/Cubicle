@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class RocketLauncherProjectile : Projectile
 {
-    public Vector3 ScaleSize;
+    public Vector3 ScaleSize = new Vector3(0.2f, 0.1f, 0.1f);
     private bool exploded = false;
 
     public void BuildProjectile()
     {
         Init();
-        //* scaling projectile
-        ScaleSize = new Vector3(0.2f, 0.1f, 0.1f);
         gameObject.transform.localScale = ScaleSize;
         //* add explosive radius to projectile
         ExplosionRadius = 5f;
@@ -25,10 +23,11 @@ public class RocketLauncherProjectile : Projectile
         */
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != LayerMask.GetMask("Player1"))
+        if (collision.gameObject.layer != FiredFrom)
         {
             if (!exploded)
             {
+                Debug.Log("Collision Object: " + collision.gameObject.ToString());
                 exploded = true;
                 //adding explosion at point of collision
                 Vector3 collisionPoint = collision.GetContact(0).point;
