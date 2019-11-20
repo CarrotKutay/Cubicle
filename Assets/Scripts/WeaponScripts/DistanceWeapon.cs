@@ -40,7 +40,6 @@ public class DistanceWeapon : MonoBehaviour
             FiringDirection.y,
             0);
         firingDirection = FiringDirection.normalized;
-        Debug.Log("FiringDirection: " + FiringDirection.ToString());
     }
     protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
     {
