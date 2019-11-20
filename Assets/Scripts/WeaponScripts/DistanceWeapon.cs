@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class DistanceWeapon : MonoBehaviour
 {
     private bool isFiring, equipped, iS_WEAPON = true;
@@ -39,8 +40,19 @@ public class DistanceWeapon : MonoBehaviour
             FiringDirection.x,
             FiringDirection.y,
             0);
+<<<<<<< HEAD
         firingDirection = FiringDirection.normalized;
+=======
+      //  firingDirection = FiringDirection.normalized;
+        Debug.Log("FiringDirection: " + FiringDirection.ToString());
+>>>>>>> 3a7474c0135cfbca646682a70cb88d14b8dcae16
     }
+
+    protected void getJoystickDirection()
+    {
+        
+    }
+
     protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
     {
         Ammunition = AmmunitionCount;
