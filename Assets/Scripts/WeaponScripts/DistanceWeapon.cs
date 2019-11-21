@@ -40,12 +40,9 @@ public class DistanceWeapon : MonoBehaviour
             FiringDirection.x,
             FiringDirection.y,
             0);
-<<<<<<< HEAD
         firingDirection = FiringDirection.normalized;
-=======
       //  firingDirection = FiringDirection.normalized;
         Debug.Log("FiringDirection: " + FiringDirection.ToString());
->>>>>>> 3a7474c0135cfbca646682a70cb88d14b8dcae16
     }
 
     protected void getJoystickDirection()

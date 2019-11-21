@@ -46,7 +46,7 @@ public class RocketLauncher : DistanceWeapon
     {
         IsFiring = true;
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger") > 0)
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger1") > 0 || Input.GetAxis("RightTrigger2") > 0)
         {
             WeaponFired();
             yield return new WaitForSeconds(FiringRate);
