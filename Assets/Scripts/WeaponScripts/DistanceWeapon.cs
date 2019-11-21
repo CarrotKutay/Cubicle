@@ -40,7 +40,6 @@ public class DistanceWeapon : MonoBehaviour
             FiringDirection.x,
             FiringDirection.y,
             0);
-        //firingDirection = FiringDirection.normalized;
     }
 
     protected void getJoystickDirection()
