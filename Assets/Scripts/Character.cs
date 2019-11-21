@@ -33,32 +33,24 @@ public class Character : MonoBehaviour
 
     void equipWeapon(GameObject Weapon)
     {
-        Weapon.GetComponent<DistanceWeapon>().Equipped = true;
+        if (identifyWeapon(Weapon) == typeof(RocketLauncher))
+        {
+            Weapon.GetComponent<RocketLauncher>().Equipped = true;
+        }
         Weapon.layer = personalLayer;
         Weapon.GetComponent<Rigidbody>().useGravity = false;
 
-        if (WeaponSlot1 == null) // equip weapon on slot 1 if empty
+        if (WeaponSlot1.transform.childCount == 0) // equip weapon on slot 1 if empty
         {
             Weapon.transform.parent = WeaponSlot1.transform;
             holdingWeapon[0] = true;
             if (!holdingWeapon[1]) { ActiveWeapon = WeaponSlot1; }
         }
-        else if (WeaponSlot2 == null) // equip weapon on slot 2 if empty
+        else if (WeaponSlot2.transform.childCount == 0) // equip weapon on slot 2 if empty
         {
             Weapon.transform.parent = WeaponSlot2.transform; ;
             holdingWeapon[1] = true;
             if (!holdingWeapon[0]) { ActiveWeapon = WeaponSlot2; }
-        }
-        else
-        {
-            if (WeaponSlot1.Equals(ActiveWeapon))
-            {
-                Weapon.transform.parent = WeaponSlot1.transform;
-            }
-            else
-            {
-                Weapon.transform.parent = WeaponSlot2.transform;
-            }
         }
         Weapon.transform.localPosition = Vector3.zero;
         Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
@@ -66,7 +58,7 @@ public class Character : MonoBehaviour
     }
 
     ///<summary>
-    /// Method to change the active Weapon from either one tóf the Weapon Slots to the other
+    /// Method to change the active Weapon from either one of the Weapon Slots to the other
     ///</summary>
     void changeActiveWeapon()
     {
@@ -84,17 +76,62 @@ public class Character : MonoBehaviour
         }
     }
 
+    ///<summary>
+    ///We need to know what kind of weapon it is to access the component and its properties
+    ///</summary>
+    private System.Type identifyWeapon(GameObject obj)
+    {
+        if (obj.TryGetComponent(out RocketLauncher rocketLauncher))
+        {
+            return typeof(RocketLauncher);
+        }
+        return null;
+    }
     public void pickUp(GameObject obj)
     {
+        equipWeapon(obj);
+    }
+    void DropWeapon()
+    {
+        emptyWeaponSlot();
+        removeWeaponFromPlayer(ActiveWeapon);
+    }
 
-        if (obj.GetComponent<DistanceWeapon>().IS_WEAPON)
+    private void removeWeaponFromPlayer(GameObject slot)
+    {
+        if (slot.transform.childCount > 0)
         {
-            equipWeapon(obj);
+            Transform dropWeapon = slot.transform.GetChild(0);
+            dropWeapon.transform.parent = null;
+            dropWeapon.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            activeWeapon = null;
         }
     }
-    void DropWeapon() { }
+    ///<summary>
+    ///Always empties the active Weapon slot and makes it free to be used for new weapons / carrieable items
+    ///</summary>
+    private void emptyWeaponSlot()
+    {
+        if (activeWeapon == WeaponSlot1)
+        {
+            WeaponSlot1.transform.DetachChildren();
+            holdingWeapon[0] = false;
+        }
+        else
+        {
+            WeaponSlot2.transform.DetachChildren();
+            holdingWeapon[1] = false;
+        }
+    }
 
-    void ThrowWeapon() { }
+    public void throwWeapon()
+    {
+        if (ActiveWeapon != null && ActiveWeapon.transform.childCount > 0)
+        {
+            removeWeaponFromPlayer(ActiveWeapon);
+            emptyWeaponSlot();
+        }
+    }
 
     ///<summary>
     /// Coroutine checking if <see cref="this.Health"/>  is below or at 0
@@ -177,7 +214,7 @@ public class Character : MonoBehaviour
 
     private void OnCollisionStay(Collision other)
     {
-        if (other.gameObject.layer != LayerMask.GetMask("Arena"))
+        if (other.gameObject.layer != LayerMask.NameToLayer("Arena"))
         {
             if (Input.GetButtonDown("PickUp"))
             {
