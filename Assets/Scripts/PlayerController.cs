@@ -33,19 +33,19 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
         // Sprung und Doppelsprung mit der Pfeiltaste nach oben.
-        if(Input.GetKeyDown(KeyCode.UpArrow) && extraJumps == 2)
+        if (Input.GetButtonDown("Jump") && extraJumps == 2)
         {
             rb.velocity = Vector2.up * jumpForce;
             extraJumps--;
         }
 
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && extraJumps == 1)
+        else if (Input.GetButtonDown("Jump") && extraJumps == 1)
         {
             rb.velocity = Vector2.up * jumpForce * 0.8f;
             extraJumps--;
         }
 
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && extraJumps == 0)
+        else if (Input.GetButtonDown("Jump") && extraJumps == 0)
         {
             rb.velocity = Vector2.up * 0;
         }
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             extraJumps = 2;
         }
