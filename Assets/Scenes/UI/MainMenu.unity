@@ -440,7 +440,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_MethodName: onClickPlay
         m_Mode: 1
         m_Arguments:
@@ -1365,8 +1365,8 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1448,12 +1448,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e62c6625b691841853e8c30ff0544b, type: 3}
+  m_Script: {fileID: 11500000, guid: 72bd514fcae4a0e48be7562f863f9735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuUI: {fileID: 1925640382}
-  gameSettingsUI: {fileID: 605793369}
-  controlUI: {fileID: 618198109}
+  level1: {fileID: 0}
+  level2: {fileID: 0}
+  level3: {fileID: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,12 +1463,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ee74614fd757d49b28f370245444b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2750383d1c6468d4aab6ed7608593c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1: {fileID: 400799497}
-  level2: {fileID: 764957505}
-  level3: {fileID: 998071744}
+  mainMenuUI: {fileID: 0}
+  gameSettingsUI: {fileID: 0}
+  controlUI: {fileID: 0}
 --- !u!1 &969580172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,7 +1796,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_MethodName: onClickBackToMenu
         m_Mode: 1
         m_Arguments:
@@ -1929,7 +1929,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_MethodName: onClickQuit
         m_Mode: 1
         m_Arguments:
@@ -3005,7 +3005,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194230}
+      - m_Target: {fileID: 0}
         m_MethodName: chooseStage
         m_Mode: 1
         m_Arguments:
@@ -3138,7 +3138,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_MethodName: onClickControl
         m_Mode: 1
         m_Arguments:
@@ -3931,7 +3931,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_MethodName: onClickBackToMenu
         m_Mode: 1
         m_Arguments:
