@@ -18,7 +18,6 @@ public class Projectile : MonoBehaviour
     }
     private void Init()
     {
-        Debug.Log("Called");
         //create projectile
         gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<BoxCollider>();
@@ -50,5 +49,18 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         StartCoroutine(waitToClean());
+    }
+
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer != FiredFrom)
+        {
+            Debug.Log("Collision Object: " + other.gameObject.ToString());
+            if (other.gameObject.TryGetComponent<Character>(out Character player))
+            {
+                player.UpdateHealth(Damage);
+            }
+            cleanup();
+        }
     }
 }

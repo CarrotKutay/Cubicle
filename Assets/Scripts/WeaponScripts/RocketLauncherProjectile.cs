@@ -20,7 +20,7 @@ public class RocketLauncherProjectile : Projectile
         **  Checking for Collision with a target
         **  After Target was hit projectile will be cleaned up to not clutter scene
         */
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer != FiredFrom)
         {

@@ -100,6 +100,7 @@ public class DistanceWeapon : MonoBehaviour
         Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+        Physics.IgnoreCollision(PTBody.GetComponent<Collider>(), gameObject.transform.parent.parent.GetComponent<Collider>(), true);
         rigidbody.AddForceAtPosition(FiringDirection.normalized * FiringStrength, PTBody.transform.position, ForceMode.Impulse);
     }
 
