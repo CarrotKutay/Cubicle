@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class DistanceWeapon : MonoBehaviour
 {
-    private bool isFiring, equipped, iS_WEAPON = true;
+    private bool isFiring, equipped, is_weapon = true;
     protected int Ammunition { get; set; }
     protected int CurrentAmmunition { get; set; }
     protected int Damage { get; set; }
     protected float FiringRate { get; set; }
     protected int FiringStrength { get; set; }
     protected Rigidbody Rb { get => rb; set => rb = value; }
-    protected Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
+    public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
-    public bool IS_WEAPON { get => iS_WEAPON; }
+    public bool is_Weapon { get => is_weapon; }
     public bool Equipped { get => equipped; set => equipped = value; }
 
     private Vector3 firingDirection;
@@ -25,7 +25,7 @@ public class DistanceWeapon : MonoBehaviour
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    private void Reload()
+    public void Reload()
     {
         CurrentAmmunition = Ammunition;
     }
@@ -40,14 +40,11 @@ public class DistanceWeapon : MonoBehaviour
             FiringDirection.x,
             FiringDirection.y,
             0);
-        firingDirection = FiringDirection.normalized;
-      //  firingDirection = FiringDirection.normalized;
-        Debug.Log("FiringDirection: " + FiringDirection.ToString());
     }
 
     protected void getJoystickDirection()
     {
-        
+
     }
 
     protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
@@ -61,7 +58,6 @@ public class DistanceWeapon : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
         isFiring = false;
         equipped = false;
-        Reload();
     }
 
     ///<summary>
@@ -69,6 +65,8 @@ public class DistanceWeapon : MonoBehaviour
     ///</summary>
     private void aimWeapon()
     {
+        //fixed aim with * 10 the larger vector turns the weapon towards the right direction
+        //don't know yet why a smaller vector does not work in this context
         transform.LookAt(firingDirection);
     }
 
@@ -83,4 +81,16 @@ public class DistanceWeapon : MonoBehaviour
     }
 
     protected virtual void shoot() { }
+
+    protected private void OnTransformParentChanged()
+    {
+
+        if (transform.parent == null)
+        {
+            isFiring = false;
+            equipped = false;
+            rb.constraints = RigidbodyConstraints.FreezePositionZ;
+            rb.useGravity = true;
+        }
+    }
 }

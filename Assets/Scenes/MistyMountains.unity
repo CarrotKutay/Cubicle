@@ -166,7 +166,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -226,6 +225,7 @@ GameObject:
   - component: {fileID: 223196292}
   - component: {fileID: 223196291}
   - component: {fileID: 223196290}
+  - component: {fileID: 223196295}
   m_Layer: 0
   m_Name: example weapon
   m_TagString: Untagged
@@ -272,7 +272,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -319,6 +318,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &223196295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223196289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f5e58082d534e44a23fa1273a58d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &316857194
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +500,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -679,7 +689,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -725,8 +734,8 @@ GameObject:
   - component: {fileID: 1240858435}
   - component: {fileID: 1240858434}
   - component: {fileID: 1240858433}
-  - component: {fileID: 1240858440}
-  - component: {fileID: 1240858439}
+  - component: {fileID: 1240858442}
+  - component: {fileID: 1240858441}
   - component: {fileID: 1240858438}
   m_Layer: 0
   m_Name: Cube
@@ -778,7 +787,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -834,12 +842,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240858432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c69743b665ebaa439de9ac304ee19a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a3375bb9ad0ed545b057ff5a8a94c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 3
+--- !u!114 &1240858441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240858432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755f819c4527c0a4c9484241be725325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
   jumpForce: 13
---- !u!114 &1240858439
+--- !u!114 &1240858442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -848,20 +869,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240858432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed31744dfc8a93b46a65a7698efe9642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityScale: 3
---- !u!114 &1240858440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240858432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2bc5d7f4b4178342b9ebad82959a310, type: 3}
+  m_Script: {fileID: 11500000, guid: 411ead28aef21dd4c8a0cc9dc4ffdf22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1829623551

@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector2.up * 0;
         }
 
+        //throw weapon
+        if (Input.GetButtonDown("Throw"))
+        {
+            GetComponent<Character>().throwWeapon();
+        }
+
         // Respawn bei mehreren Leben
         /*
         if (gameObject.transform.position.y < -5.0f)

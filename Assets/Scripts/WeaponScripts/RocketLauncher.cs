@@ -26,7 +26,7 @@ public class RocketLauncher : DistanceWeapon
         RocketLauncherProjectile projectile = PTBody.GetComponent<RocketLauncherProjectile>();
         projectile.addDamage(Damage);
         projectile.FiredFrom = gameObject.layer;
-        PTBody.transform.position = transform.parent.parent.position;
+        PTBody.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         PTBody.transform.parent = null;
         projectile.BuildProjectile();
         PTBody.name = "RocketLauncherProjectile";
@@ -38,7 +38,7 @@ public class RocketLauncher : DistanceWeapon
         Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-        rigidbody.AddForce(FiringDirection);
+        rigidbody.AddForceAtPosition(FiringDirection.normalized * 10, PTBody.transform.position, ForceMode.Impulse);
     }
 
 
@@ -66,6 +66,7 @@ public class RocketLauncher : DistanceWeapon
     private void Start()
     {
         Init(10, 15, 1, 2);
+        Reload();
         StartCoroutine(checkButtonFired());
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    protected float Speed, Velocity;
     protected LayerMask firedFrom;
     protected Rigidbody rb;
     protected BoxCollider ProjectileCollider;
