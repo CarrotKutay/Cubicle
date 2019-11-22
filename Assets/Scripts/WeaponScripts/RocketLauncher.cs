@@ -7,6 +7,7 @@ public class RocketLauncher : DistanceWeapon
 
     protected override void addProjectile()
     {
+        Debug.Log("called override addProjectile");
         //create Projectile Body PTBody
         PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
         PTBody.AddComponent<RocketLauncherProjectile>();
@@ -21,7 +22,7 @@ public class RocketLauncher : DistanceWeapon
 
     private void Start()
     {
-        Init(10, 15, 1, 2);
+        Init(10, 15, 10, 2);
         Reload();
         StartCoroutine(checkButtonFired());
     }

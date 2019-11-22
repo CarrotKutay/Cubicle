@@ -89,7 +89,7 @@ public class DistanceWeapon : MonoBehaviour
             addProjectile();
             fireProjectile();
             // Remove Fired Projectile
-            this.CurrentAmmunition = CurrentAmmunition - 1;
+            CurrentAmmunition = CurrentAmmunition - 1;
         }
     }
 
@@ -100,7 +100,7 @@ public class DistanceWeapon : MonoBehaviour
         Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-        rigidbody.AddForceAtPosition(FiringDirection.normalized * 10, PTBody.transform.position, ForceMode.Impulse);
+        rigidbody.AddForceAtPosition(FiringDirection.normalized * FiringStrength, PTBody.transform.position, ForceMode.Impulse);
     }
 
     protected void shoot()
@@ -125,7 +125,7 @@ public class DistanceWeapon : MonoBehaviour
 
     protected private void OnTransformParentChanged()
     {
-        if (transform.parent == null)
+        if (transform.parent == null && rb != null)
         {
             isFiring = false;
             equipped = false;

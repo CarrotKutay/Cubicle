@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
     }
     private void Init()
     {
+        Debug.Log("Called");
         //create projectile
         gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<BoxCollider>();
@@ -41,9 +42,13 @@ public class Projectile : MonoBehaviour
         yield return new WaitForSeconds(7);
         cleanup();
     }
-    private void Start()
+
+    private void Awake()
     {
         Init();
+    }
+    private void Start()
+    {
         StartCoroutine(waitToClean());
     }
 }
