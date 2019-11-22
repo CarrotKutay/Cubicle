@@ -16,8 +16,9 @@ public class Projectile : MonoBehaviour
     {
         Damage = value;
     }
-    protected void Init()
+    private void Init()
     {
+        Debug.Log("Called");
         //create projectile
         gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<BoxCollider>();
@@ -40,6 +41,11 @@ public class Projectile : MonoBehaviour
     {
         yield return new WaitForSeconds(7);
         cleanup();
+    }
+
+    private void Awake()
+    {
+        Init();
     }
     private void Start()
     {
