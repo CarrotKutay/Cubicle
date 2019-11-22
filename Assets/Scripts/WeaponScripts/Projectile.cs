@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     {
         Damage = value;
     }
-    protected void Init()
+    private void Init()
     {
         //create projectile
         gameObject.AddComponent<Rigidbody>();
@@ -43,6 +43,7 @@ public class Projectile : MonoBehaviour
     }
     private void Start()
     {
+        Init();
         StartCoroutine(waitToClean());
     }
 }

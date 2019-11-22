@@ -6,6 +6,7 @@ using UnityEngine;
 public class DistanceWeapon : MonoBehaviour
 {
     private bool isFiring, equipped, is_weapon = true;
+    private GameObject ptBody;
     protected int Ammunition { get; set; }
     protected int CurrentAmmunition { get; set; }
     protected int Damage { get; set; }
@@ -16,6 +17,7 @@ public class DistanceWeapon : MonoBehaviour
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
     public bool is_Weapon { get => is_weapon; }
     public bool Equipped { get => equipped; set => equipped = value; }
+    public GameObject PTBody { get => ptBody; set => ptBody = value; }
 
     private Vector3 firingDirection;
     private Rigidbody rb;
@@ -80,17 +82,59 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected virtual void shoot() { }
+    protected virtual void WeaponFired()
+    {
+        if (CurrentAmmunition > 0)
+        {
+            addProjectile();
+            fireProjectile();
+            // Remove Fired Projectile
+            this.CurrentAmmunition = CurrentAmmunition - 1;
+        }
+    }
+
+    protected virtual void addProjectile() { }
+    protected void fireProjectile()
+    {
+        //Fire Projectile
+        Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
+        rigidbody.mass = 1.5f;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+        rigidbody.AddForceAtPosition(FiringDirection.normalized * 10, PTBody.transform.position, ForceMode.Impulse);
+    }
+
+    protected void shoot()
+    {
+        if (!IsFiring)
+        {
+            StartCoroutine(checkButtonFired());
+        }
+    }
+    protected virtual IEnumerator checkButtonFired()
+    {
+        IsFiring = true;
+
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger1") > 0 || Input.GetAxis("RightTrigger2") > 0)
+        {
+            WeaponFired();
+            yield return new WaitForSeconds(FiringRate);
+        }
+
+        IsFiring = false;
+    }
 
     protected private void OnTransformParentChanged()
     {
-
         if (transform.parent == null)
         {
             isFiring = false;
             equipped = false;
             rb.constraints = RigidbodyConstraints.FreezePositionZ;
             rb.useGravity = true;
+        }
+        else
+        {
+            equipped = true;
         }
     }
 }

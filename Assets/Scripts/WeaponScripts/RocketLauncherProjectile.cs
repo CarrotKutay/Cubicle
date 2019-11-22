@@ -9,7 +9,6 @@ public class RocketLauncherProjectile : Projectile
 
     public void BuildProjectile()
     {
-        Init();
         gameObject.transform.localScale = ScaleSize;
         //* add explosive radius to projectile
         ExplosionRadius = 5f;

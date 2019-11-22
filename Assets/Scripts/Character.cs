@@ -33,10 +33,6 @@ public class Character : MonoBehaviour
 
     void equipWeapon(GameObject Weapon)
     {
-        if (identifyWeapon(Weapon) == typeof(RocketLauncher))
-        {
-            Weapon.GetComponent<RocketLauncher>().Equipped = true;
-        }
         Weapon.layer = personalLayer;
         Weapon.GetComponent<Rigidbody>().useGravity = false;
 
@@ -76,17 +72,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///We need to know what kind of weapon it is to access the component and its properties
-    ///</summary>
-    private System.Type identifyWeapon(GameObject obj)
-    {
-        if (obj.TryGetComponent(out RocketLauncher rocketLauncher))
-        {
-            return typeof(RocketLauncher);
-        }
-        return null;
-    }
     public void pickUp(GameObject obj)
     {
         equipWeapon(obj);
