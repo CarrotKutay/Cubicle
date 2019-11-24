@@ -20,13 +20,12 @@ public class RocketLauncherProjectile : Projectile
         **  Checking for Collision with a target
         **  After Target was hit projectile will be cleaned up to not clutter scene
         */
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer != FiredFrom)
         {
             if (!exploded)
             {
-                Debug.Log("Collision Object: " + collision.gameObject.ToString());
                 exploded = true;
                 //adding explosion at point of collision
                 Vector3 collisionPoint = collision.GetContact(0).point;

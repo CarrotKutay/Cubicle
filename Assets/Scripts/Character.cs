@@ -3,32 +3,36 @@ using System.Collections;
 
 public class Character : MonoBehaviour
 {
-    private float hi;
-
-
     private int Health;
     private string Name;
     private float Speed;
-    ///<summary>
-    /// Boolean Array to indicate if Weapon is hold in Slot 1 (holdingWeapon[0]) or Slot 2 (holdingWeapon[1]). Might be opsolete in further updates -> possible to perform Weapon actions in a class "Slot"
-    /// <param name="holdingWeapon"></param>
-    ///</summary>
-    private bool[] holdingWeapon;
     private LayerMask personalLayer;
     /// <summary>
     /// we are providing the option of holding two weapons which are interchangeable for the player to choose from and hold while carrying
     /// <param name="WeaponSlot1"> </param>
     /// <param name="WeaponSlot2"> </param>
     /// </summary>
-    private GameObject WeaponSlot1, WeaponSlot2;
+    public WeaponSlot WeaponSlot1;
+    public WeaponSlot WeaponSlot2;
     /// <summary>
     /// ActiveWeapon will be the Weapon the player performs actions with, it is interchangable bewteen "WeaponSlot1" and "WeaponSlot2"
-    /// <param name="ActiveWeapon"> </param>
     /// </summary>
-    private GameObject activeWeapon;
+    public GameObject getActiveWeapon
+    {
+        get
+        {
+            if (WeaponSlot1.IsActiveSlot && WeaponSlot1.HoldsWeapon)
+            {
+                return WeaponSlot1.Transform.GetChild(0).gameObject;
+            }
+            else if (WeaponSlot2.IsActiveSlot && WeaponSlot2.HoldsWeapon)
+            {
+                return WeaponSlot2.Transform.GetChild(0).gameObject;
+            }
+            return null;
+        }
+    }
     private bool checkingHealth;
-
-    public GameObject ActiveWeapon { get => activeWeapon; set => activeWeapon = value; }
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
 
     void equipWeapon(GameObject Weapon)
@@ -36,17 +40,17 @@ public class Character : MonoBehaviour
         Weapon.layer = personalLayer;
         Weapon.GetComponent<Rigidbody>().useGravity = false;
 
-        if (WeaponSlot1.transform.childCount == 0) // equip weapon on slot 1 if empty
+        if (!WeaponSlot1.HoldsWeapon) // equip weapon on slot 1 if empty
         {
-            Weapon.transform.parent = WeaponSlot1.transform;
-            holdingWeapon[0] = true;
-            if (!holdingWeapon[1]) { ActiveWeapon = WeaponSlot1; }
+            Weapon.transform.parent = WeaponSlot1.Transform;
+            WeaponSlot1.HoldsWeapon = true;
+            if (!WeaponSlot2.HoldsWeapon) { WeaponSlot1.IsActiveSlot = true; }
         }
-        else if (WeaponSlot2.transform.childCount == 0) // equip weapon on slot 2 if empty
+        else if (!WeaponSlot2.HoldsWeapon) // equip weapon on slot 2 if empty
         {
-            Weapon.transform.parent = WeaponSlot2.transform; ;
-            holdingWeapon[1] = true;
-            if (!holdingWeapon[0]) { ActiveWeapon = WeaponSlot2; }
+            Weapon.transform.parent = WeaponSlot2.Transform; ;
+            WeaponSlot2.HoldsWeapon = true;
+            if (!WeaponSlot1.HoldsWeapon) { WeaponSlot2.IsActiveSlot = true; }
         }
         Weapon.transform.localPosition = Vector3.zero;
         Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
@@ -58,17 +62,15 @@ public class Character : MonoBehaviour
     ///</summary>
     void changeActiveWeapon()
     {
-        if (ActiveWeapon == WeaponSlot1)
+        if (WeaponSlot1.IsActiveSlot)
         {
-            WeaponSlot1.gameObject.SetActive(false);
-            WeaponSlot2.gameObject.SetActive(true);
-            ActiveWeapon = WeaponSlot2;
+            WeaponSlot1.IsActiveSlot = false;
+            WeaponSlot2.IsActiveSlot = true;
         }
-        else if (ActiveWeapon == WeaponSlot2)
+        else if (WeaponSlot2.IsActiveSlot)
         {
-            WeaponSlot1.gameObject.SetActive(true);
-            WeaponSlot2.gameObject.SetActive(false);
-            ActiveWeapon = WeaponSlot1;
+            WeaponSlot1.IsActiveSlot = true;
+            WeaponSlot2.IsActiveSlot = false;
         }
     }
 
@@ -78,44 +80,35 @@ public class Character : MonoBehaviour
     }
     void DropWeapon()
     {
-        emptyWeaponSlot();
-        removeWeaponFromPlayer(ActiveWeapon);
+        removeWeaponFromPlayer();
     }
 
-    private void removeWeaponFromPlayer(GameObject slot)
+    private void removeWeaponFromPlayer()
     {
-        if (slot.transform.childCount > 0)
+        WeaponSlot weaponSlot = WeaponSlot1.IsActiveSlot ? WeaponSlot1 : WeaponSlot2;
+        if (weaponSlot.HoldsWeapon)
         {
-            Transform dropWeapon = slot.transform.GetChild(0);
+            Transform dropWeapon = weaponSlot.Transform.GetChild(0);
             dropWeapon.transform.parent = null;
             dropWeapon.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            activeWeapon = null;
-        }
-    }
-    ///<summary>
-    ///Always empties the active Weapon slot and makes it free to be used for new weapons / carrieable items
-    ///</summary>
-    private void emptyWeaponSlot()
-    {
-        if (activeWeapon == WeaponSlot1)
-        {
-            WeaponSlot1.transform.DetachChildren();
-            holdingWeapon[0] = false;
-        }
-        else
-        {
-            WeaponSlot2.transform.DetachChildren();
-            holdingWeapon[1] = false;
+            weaponSlot.IsActiveSlot = false;
+            weaponSlot.Transform.DetachChildren();
+            weaponSlot.HoldsWeapon = false;
         }
     }
 
     public void throwWeapon()
     {
-        if (ActiveWeapon != null && ActiveWeapon.transform.childCount > 0)
+        if (isThrowableObject())
         {
-            removeWeaponFromPlayer(ActiveWeapon);
-            emptyWeaponSlot();
+            removeWeaponFromPlayer();
         }
+    }
+
+    private bool isThrowableObject()
+    {
+        bool slot1 = WeaponSlot1.IsActiveSlot && WeaponSlot1.HoldsWeapon, slot2 = WeaponSlot2.IsActiveSlot && WeaponSlot2.HoldsWeapon;
+        return slot1 || slot2;
     }
 
     ///<summary>
@@ -163,9 +156,6 @@ public class Character : MonoBehaviour
         Speed = 1;
         personalLayer = LayerMask.NameToLayer("Player1");
         initSlots();
-        holdingWeapon = new bool[2];
-        holdingWeapon[1] = false;
-        holdingWeapon[0] = false;
         checkingHealth = false;
         gameObject.layer = personalLayer;
         this.name = "Player";
@@ -173,16 +163,8 @@ public class Character : MonoBehaviour
 
     private void initSlots()
     {
-        WeaponSlot1 = new GameObject();
-        WeaponSlot2 = new GameObject();
-        WeaponSlot1.name = "Slot1";
-        WeaponSlot2.name = "Slot2";
-        WeaponSlot1.transform.parent = transform;
-        WeaponSlot2.transform.parent = transform;
-        WeaponSlot1.transform.localPosition = Vector3.back;
-        WeaponSlot2.transform.localPosition = Vector3.back;
-        WeaponSlot1.layer = personalLayer;
-        WeaponSlot2.layer = personalLayer;
+        WeaponSlot1 = new WeaponSlot(transform, personalLayer);
+        WeaponSlot2 = new WeaponSlot(transform, personalLayer);
     }
 
     // Start is called before the first frame update
@@ -195,6 +177,7 @@ public class Character : MonoBehaviour
     void Update()
     {
         if (!checkingHealth) StartCoroutine(healthcare());
+        checkReload();
     }
 
     private void OnCollisionStay(Collision other)
@@ -205,6 +188,14 @@ public class Character : MonoBehaviour
             {
                 pickUp(other.gameObject);
             }
+        }
+    }
+
+    private void checkReload()
+    {
+        if (Input.GetButtonDown("Reload"))
+        {
+            getActiveWeapon.SendMessage("reload");
         }
     }
 }
