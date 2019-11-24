@@ -5,17 +5,23 @@ using UnityEngine;
 
 public class DistanceWeapon : MonoBehaviour
 {
-    private bool isFiring, equipped, is_weapon = true;
-    protected int Ammunition { get; set; }
-    protected int CurrentAmmunition { get; set; }
+    private bool isFiring, equipped;
+    private GameObject ptBody;
+    protected int ammunition;
+    [SerializeField]
+    protected int currentAmmunition;
+    [SerializeField]
     protected int Damage { get; set; }
+    [SerializeField]
     protected float FiringRate { get; set; }
     protected int FiringStrength { get; set; }
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
-    public bool is_Weapon { get => is_weapon; }
     public bool Equipped { get => equipped; set => equipped = value; }
+    public GameObject PTBody { get => ptBody; set => ptBody = value; }
+    public int CurrentAmmunition { get => currentAmmunition; set => currentAmmunition = value; }
+    public int Ammunition { get => ammunition; set => ammunition = value; }
 
     private Vector3 firingDirection;
     private Rigidbody rb;
@@ -25,7 +31,7 @@ public class DistanceWeapon : MonoBehaviour
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    public void Reload()
+    protected void reload()
     {
         CurrentAmmunition = Ammunition;
     }
@@ -80,17 +86,66 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected virtual void shoot() { }
+    protected virtual void WeaponFired()
+    {
+        if (CurrentAmmunition > 0)
+        {
+            addProjectile();
+            fireProjectile();
+            // Remove Fired Projectile
+            CurrentAmmunition = CurrentAmmunition - 1;
+        }
+    }
+
+    protected virtual void addProjectile()
+    {
+        //create Projectile Body PTBody
+        PTBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        PTBody.transform.position = new Vector3(transform.position.x, transform.position.y, 0) + FiringDirection.normalized * 0.5f; // setting a distance (+ FiringDirection.normalized * 0.5f) to the center point of the shooting player to make collision with own projectile not possible
+        PTBody.transform.parent = null;
+    }
+    protected void fireProjectile()
+    {
+        //Fire Projectile
+        Rigidbody rigidbody = PTBody.GetComponent<Rigidbody>();
+        rigidbody.mass = 1.5f;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+        rigidbody.AddForceAtPosition(FiringDirection.normalized * FiringStrength, PTBody.transform.position, ForceMode.Impulse);
+        Physics.IgnoreCollision(PTBody.GetComponent<BoxCollider>(), gameObject.transform.parent.parent.GetComponent<Collider>(), true);
+    }
+
+    protected void shoot()
+    {
+        if (!IsFiring)
+        {
+            StartCoroutine(checkButtonFired());
+        }
+    }
+    protected IEnumerator checkButtonFired()
+    {
+        IsFiring = true;
+
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger1") > 0 || Input.GetAxis("RightTrigger2") > 0)
+        {
+            WeaponFired();
+            yield return new WaitForSeconds(FiringRate);
+        }
+
+        IsFiring = false;
+    }
 
     protected private void OnTransformParentChanged()
     {
-
-        if (transform.parent == null)
+        if (transform.parent == null && rb != null)
         {
             isFiring = false;
             equipped = false;
             rb.constraints = RigidbodyConstraints.FreezePositionZ;
             rb.useGravity = true;
+        }
+        else
+        {
+            equipped = true;
         }
     }
 }

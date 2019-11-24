@@ -6,7 +6,6 @@ public class Projectile : MonoBehaviour
 {
     protected LayerMask firedFrom;
     protected Rigidbody rb;
-    protected BoxCollider ProjectileCollider;
     protected MeshRenderer rend;
     protected int Damage;
     public float ExplosionRadius { get; set; }
@@ -16,7 +15,7 @@ public class Projectile : MonoBehaviour
     {
         Damage = value;
     }
-    protected void Init()
+    private void Init()
     {
         //create projectile
         gameObject.AddComponent<Rigidbody>();
@@ -24,7 +23,6 @@ public class Projectile : MonoBehaviour
 
         //reference components
         rb = GetComponent<Rigidbody>();
-        ProjectileCollider = GetComponent<BoxCollider>();
         rend = GetComponent<MeshRenderer>();
         rend.material = Resources.Load<Material>("ProjectileMaterial");
         gameObject.name = "Projectile";
@@ -41,8 +39,25 @@ public class Projectile : MonoBehaviour
         yield return new WaitForSeconds(7);
         cleanup();
     }
+
+    private void Awake()
+    {
+        Init();
+    }
     private void Start()
     {
         StartCoroutine(waitToClean());
+    }
+
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer != FiredFrom)
+        {
+
+            if (other.gameObject.TryGetComponent<Character>(out Character player))
+            {
+                player.UpdateHealth(Damage);
+            }
+        }
     }
 }

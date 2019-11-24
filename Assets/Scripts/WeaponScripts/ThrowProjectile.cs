@@ -7,7 +7,7 @@ public class ThrowProjectile : Projectile
     private Vector3 throwingDirection;
     public Vector3 ThrowingDirection { get => throwingDirection; set => throwingDirection = value; }
 
-    private void OnCollisionEnter(Collision other)
+    protected override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.layer != this.FiredFrom)
         {
