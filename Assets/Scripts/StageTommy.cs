@@ -34,7 +34,7 @@ public class StageTommy : MonoBehaviour
         // current y position of the right platform
         rightYStart = rightPlatform.transform.position.y;
         // the change of that y value
-        rightYChange = Random.Range(1.0f, 2.0f) * 0.5f * Time.deltaTime;
+        rightYChange = Random.Range(1.0f, 1.5f) * 0.5f * Time.deltaTime;
 
         // current position of the left platform
         currentLeftPos = leftPlatform.transform.position;
