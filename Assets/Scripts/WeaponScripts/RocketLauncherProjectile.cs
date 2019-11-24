@@ -26,7 +26,6 @@ public class RocketLauncherProjectile : Projectile
         {
             if (!exploded)
             {
-                Debug.Log("Collision Object: " + collision.gameObject.ToString());
                 exploded = true;
                 //adding explosion at point of collision
                 Vector3 collisionPoint = collision.GetContact(0).point;

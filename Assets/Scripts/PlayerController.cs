@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
 
     private int extraJumps = 2;
+    private Character character;
 
     // private int playerLifes = 3;
 
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        character = GetComponent<Character>();
         rb = GetComponent<Rigidbody>();
         startPos.x = gameObject.transform.position.x;
         startPos.y = gameObject.transform.position.y;
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
         //throw weapon
         if (Input.GetButtonDown("Throw"))
         {
-            GetComponent<Character>().throwWeapon();
+            character.throwWeapon();
         }
 
         // Respawn bei mehreren Leben
