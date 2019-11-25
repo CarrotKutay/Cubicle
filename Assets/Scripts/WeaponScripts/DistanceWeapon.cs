@@ -17,7 +17,7 @@ public class DistanceWeapon : MonoBehaviour
     protected int FiringStrength { get; set; }
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
-    protected bool IsFiring { get => isFiring; set => isFiring = value; }
+    public bool IsFiring { get => isFiring; set => isFiring = value; }
     public bool Equipped { get => equipped; set => equipped = value; }
     public GameObject PTBody { get => ptBody; set => ptBody = value; }
     public int CurrentAmmunition { get => currentAmmunition; set => currentAmmunition = value; }
