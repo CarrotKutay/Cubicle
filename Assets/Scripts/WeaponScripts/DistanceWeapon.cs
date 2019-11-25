@@ -14,7 +14,9 @@ public class DistanceWeapon : MonoBehaviour
     protected int Damage { get; set; }
     [SerializeField]
     protected float FiringRate { get; set; }
+    [SerializeField]
     protected int FiringStrength { get; set; }
+    protected float timeToReload;
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
@@ -31,8 +33,14 @@ public class DistanceWeapon : MonoBehaviour
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    protected void reload()
+    protected IEnumerator reload()
     {
+        GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+        if (reloadBar != null)
+        {
+            if (reloadBar.transform.GetChild(0).TryGetComponent<ReloadProgressBar>(out ReloadProgressBar bar)) { bar.TimeToReload = timeToReload; }
+        }
+        yield return new WaitForSeconds(timeToReload);
         CurrentAmmunition = Ammunition;
     }
 
@@ -41,24 +49,28 @@ public class DistanceWeapon : MonoBehaviour
     /// </summary>
     protected void getCursorPosition()
     {
-        FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        FiringDirection = new Vector3(
-            FiringDirection.x,
-            FiringDirection.y,
-            0);
+        if (Input.GetJoystickNames().Length <= 0)
+        {
+            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"), Input.GetAxis("RightJoystickVertical1"), 0);
+            FiringDirection *= 10;
+        }
+        else
+        {
+            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            FiringDirection = new Vector3(
+                FiringDirection.x,
+                FiringDirection.y,
+                0);
+        }
     }
 
-    protected void getJoystickDirection()
-    {
-
-    }
-
-    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
+    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
     {
         Ammunition = AmmunitionCount;
         this.Damage = Damage;
         this.FiringRate = FiringRate;
         this.FiringStrength = FiringStrength;
+        this.timeToReload = timeToReload;
         gameObject.AddComponent<Rigidbody>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
@@ -111,11 +123,11 @@ public class DistanceWeapon : MonoBehaviour
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
         rigidbody.AddForceAtPosition(FiringDirection.normalized * FiringStrength, PTBody.transform.position, ForceMode.Impulse);
-        Physics.IgnoreCollision(PTBody.GetComponent<BoxCollider>(), gameObject.transform.parent.parent.GetComponent<Collider>(), true);
     }
 
     protected void shoot()
     {
+
         if (!IsFiring)
         {
             StartCoroutine(checkButtonFired());
