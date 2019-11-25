@@ -19,6 +19,6 @@ public class Minigun : DistanceWeapon
     private void Start()
     {
         Init(100, 1, 30, 0.05f, 5f);
-        reload();
+        CurrentAmmunition = Ammunition;
     }
 }

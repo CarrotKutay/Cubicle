@@ -46,7 +46,6 @@ public class ReloadProgressBar : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(TimeToReload);
         displayReloadBar();
         //  timeout += Time.deltaTime * changeSpeed;
         //  if (timeout > 1.0f)

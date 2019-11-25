@@ -33,14 +33,14 @@ public class DistanceWeapon : MonoBehaviour
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    protected void reload()
+    protected IEnumerator reload()
     {
         GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
         if (reloadBar != null)
         {
             if (reloadBar.transform.GetChild(0).TryGetComponent<ReloadProgressBar>(out ReloadProgressBar bar)) { bar.TimeToReload = timeToReload; }
         }
-
+        yield return new WaitForSeconds(timeToReload);
         CurrentAmmunition = Ammunition;
     }
 

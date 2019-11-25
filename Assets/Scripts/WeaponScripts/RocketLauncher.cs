@@ -19,7 +19,7 @@ public class RocketLauncher : DistanceWeapon
     private void Start()
     {
         Init(10, 15, 10, 2, 8f);
-        reload();
+        CurrentAmmunition = Ammunition;
         StartCoroutine(checkButtonFired());
     }
 }

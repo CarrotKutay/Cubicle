@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Field
+  - ReloadBar
   layers:
   - Default
   - TransparentFX

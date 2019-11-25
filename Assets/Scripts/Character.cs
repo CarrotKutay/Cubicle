@@ -230,13 +230,13 @@ public class Character : MonoBehaviour
     {
         if (Input.GetButtonDown("Reload") && !reloading)
         {
-            Debug.Log("Start reloading");
             reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
             reloadBar.transform.position = transform.position;
             reloadBar.tag = "ReloadBar";
             getActiveWeapon.SendMessage("reload");
-            yield return new WaitForSeconds(5f);
+            Debug.Log(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload.ToString());
+            yield return new WaitForSeconds(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload);
             Destroy(reloadBar);
             reloading = false;
         }
