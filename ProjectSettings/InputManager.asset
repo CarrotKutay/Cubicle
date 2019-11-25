@@ -60,7 +60,7 @@ InputManager:
     negativeButton: 
     positiveButton: q
     altNegativeButton: 
-    altPositiveButton: joystick button 2
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -343,7 +343,7 @@ InputManager:
     joyNum: 1
   - serializedVersion: 3
     m_Name: XButton1
-    descriptiveName: 
+    descriptiveName: Pick up the weapon
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick 1 button 2
@@ -487,7 +487,7 @@ InputManager:
     joyNum: 2
   - serializedVersion: 3
     m_Name: XButton2
-    descriptiveName: 
+    descriptiveName: pick up the weapon
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick 2 button 2
@@ -651,6 +651,38 @@ InputManager:
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick 2 button 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: SwapGP1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 5
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: SwapGP2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 2 button 5
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0

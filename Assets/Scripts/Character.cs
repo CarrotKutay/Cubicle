@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Character : MonoBehaviour
@@ -7,7 +8,13 @@ public class Character : MonoBehaviour
     public int health { get => Health; set => Health = value; }
     private string Name;
     private float Speed;
+    public int controllerNum;
     private LayerMask personalLayer;
+
+    private string swapInput;
+    private string reloadInput;
+    private string throwInput;
+    private string pickUpInput;
     /// <summary>
     /// we are providing the option of holding two weapons which are interchangeable for the player to choose from and hold while carrying
     /// <param name="WeaponSlot1"> </param>
@@ -18,6 +25,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// ActiveWeapon will be the Weapon the player performs actions with, it is interchangable bewteen "WeaponSlot1" and "WeaponSlot2"
     /// </summary>
+    ///
     public GameObject getActiveWeapon
     {
         get
@@ -33,37 +41,41 @@ public class Character : MonoBehaviour
             return null;
         }
     }
-    private bool checkingHealth, reloading;
+    private bool checkingHealth, #ing;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
     public bool Reloading { get => reloading; set => reloading = value; }
 
     void equipWeapon(GameObject Weapon)
     {
-        Weapon.layer = personalLayer;
-        Weapon.GetComponent<Rigidbody>().useGravity = false;
+        if (Weapon.tag == "Weapon")
+        {
+            Weapon.layer = personalLayer;
+            Weapon.GetComponent<Rigidbody>().useGravity = false;
 
-        if (!WeaponSlot1.HoldsWeapon) // equip weapon on slot 1 if empty
-        {
-            Weapon.transform.parent = WeaponSlot1.Transform;
-            WeaponSlot1.HoldsWeapon = true;
-            if (!WeaponSlot2.HoldsWeapon)
+            if (!WeaponSlot1.HoldsWeapon) // equip weapon on slot 1 if empty
             {
-                WeaponSlot1.IsActiveSlot = true;
-                WeaponSlot2.IsActiveSlot = false;
+                Weapon.transform.parent = WeaponSlot1.Transform;
+                WeaponSlot1.HoldsWeapon = true;
+                if (!WeaponSlot2.HoldsWeapon)
+                {
+                    WeaponSlot1.IsActiveSlot = true;
+                    WeaponSlot2.IsActiveSlot = false;
+                }
             }
-        }
-        else if (!WeaponSlot2.HoldsWeapon) // equip weapon on slot 2 if empty
-        {
-            Weapon.transform.parent = WeaponSlot2.Transform; ;
-            WeaponSlot2.HoldsWeapon = true;
-            if (!WeaponSlot1.HoldsWeapon)
+            else if (!WeaponSlot2.HoldsWeapon) // equip weapon on slot 2 if empty
             {
-                WeaponSlot2.IsActiveSlot = true;
-                WeaponSlot1.IsActiveSlot = false;
+                Weapon.transform.parent = WeaponSlot2.Transform; ;
+                WeaponSlot2.HoldsWeapon = true;
+                if (!WeaponSlot1.HoldsWeapon)
+                {
+                    WeaponSlot2.IsActiveSlot = true;
+                    WeaponSlot1.IsActiveSlot = false;
+                }
             }
+            Weapon.transform.localPosition = Vector3.zero;
+            Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
         }
-        Weapon.transform.localPosition = Vector3.zero;
-        Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
 
     }
 
@@ -88,6 +100,7 @@ public class Character : MonoBehaviour
     {
         equipWeapon(obj);
     }
+
     void DropWeapon()
     {
         removeWeaponFromPlayer();
@@ -196,6 +209,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         InitCharacter();
+        setJoystickInputs();
     }
 
     // Update is called once per frame
@@ -214,7 +228,7 @@ public class Character : MonoBehaviour
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("Arena"))
         {
-            if (Input.GetButtonDown("PickUp"))
+            if (Input.GetButtonDown("PickUp") || Input.GetButtonDown(pickUpInput))
             {
                 pickUp(other.gameObject);
             }
@@ -223,14 +237,17 @@ public class Character : MonoBehaviour
 
     private void checkActiveWeaponSwap()
     {
-        if (Input.GetButtonDown("Swap Weapon"))
+        if (Input.GetButtonDown("Swap Weapon") || Input.GetButtonDown(swapInput))
         {
+            DistanceWeapon activeWeapon = getActiveWeapon.GetComponentInChildren<DistanceWeapon>();
+            activeWeapon.IsFiring = false;
             changeActiveWeapon();
         }
     }
+    
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload") || Input.GetAxis("ReloadGP1") > 0 || Input.GetAxis("ReloadGP2") > 0) 
+        if (Input.GetButtonDown("Reload") || Input.GetAxis(reloadInput) > 0) 
         {
             Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
@@ -251,5 +268,13 @@ public class Character : MonoBehaviour
             Destroy(reloadBar);
             Reloading = false;
         }
+    }
+
+    private void setJoystickInputs()
+    {
+        swapInput = "SwapGP" + controllerNum;
+        pickUpInput = "XButton" + controllerNum;
+        reloadInput = "ReloadGP" + controllerNum;
+        throwInput = "ThrowGP" + controllerNum;
     }
 }
