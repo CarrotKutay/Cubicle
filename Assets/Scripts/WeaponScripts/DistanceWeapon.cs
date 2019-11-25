@@ -114,11 +114,11 @@ public class DistanceWeapon : MonoBehaviour
         rigidbody.mass = 1.5f;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
         rigidbody.AddForceAtPosition(FiringDirection.normalized * FiringStrength, PTBody.transform.position, ForceMode.Impulse);
-        Physics.IgnoreCollision(PTBody.GetComponent<BoxCollider>(), gameObject.transform.parent.parent.GetComponent<Collider>(), true);
     }
 
     protected void shoot()
     {
+
         if (!IsFiring)
         {
             StartCoroutine(checkButtonFired());

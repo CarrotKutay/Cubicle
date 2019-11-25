@@ -45,13 +45,21 @@ public class Character : MonoBehaviour
         {
             Weapon.transform.parent = WeaponSlot1.Transform;
             WeaponSlot1.HoldsWeapon = true;
-            if (!WeaponSlot2.HoldsWeapon) { WeaponSlot1.IsActiveSlot = true; }
+            if (!WeaponSlot2.HoldsWeapon)
+            {
+                WeaponSlot1.IsActiveSlot = true;
+                WeaponSlot2.IsActiveSlot = false;
+            }
         }
         else if (!WeaponSlot2.HoldsWeapon) // equip weapon on slot 2 if empty
         {
             Weapon.transform.parent = WeaponSlot2.Transform; ;
             WeaponSlot2.HoldsWeapon = true;
-            if (!WeaponSlot1.HoldsWeapon) { WeaponSlot2.IsActiveSlot = true; }
+            if (!WeaponSlot1.HoldsWeapon)
+            {
+                WeaponSlot2.IsActiveSlot = true;
+                WeaponSlot1.IsActiveSlot = false;
+            }
         }
         Weapon.transform.localPosition = Vector3.zero;
         Weapon.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
@@ -92,9 +100,18 @@ public class Character : MonoBehaviour
             Transform dropWeapon = weaponSlot.Transform.GetChild(0);
             dropWeapon.transform.parent = null;
             dropWeapon.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            weaponSlot.IsActiveSlot = false;
             weaponSlot.Transform.DetachChildren();
             weaponSlot.HoldsWeapon = false;
+        }
+        weaponSlot = WeaponSlot1.IsActiveSlot ? WeaponSlot2 : WeaponSlot1;
+        if (weaponSlot.HoldsWeapon)
+        {
+            changeActiveWeapon();
+        }
+        else
+        {
+            WeaponSlot1.IsActiveSlot = false;
+            WeaponSlot2.IsActiveSlot = false;
         }
     }
 
@@ -177,8 +194,12 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!checkingHealth) StartCoroutine(healthcare());
+        if (!checkingHealth)
+        {
+            StartCoroutine(healthcare());
+        }
         checkReload();
+        checkActiveWeaponSwap();
     }
 
     private void OnCollisionStay(Collision other)
@@ -192,6 +213,13 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void checkActiveWeaponSwap()
+    {
+        if (Input.GetButtonDown("Swap Weapon"))
+        {
+            changeActiveWeapon();
+        }
+    }
     private void checkReload()
     {
         if (Input.GetButtonDown("Reload") || Input.GetAxis("ReloadGP1") > 0 || Input.GetAxis("ReloadGP2") > 0) 
