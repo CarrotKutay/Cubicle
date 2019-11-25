@@ -49,9 +49,9 @@ public class DistanceWeapon : MonoBehaviour
     /// </summary>
     protected void getCursorPosition()
     {
-        if (Input.GetJoystickNames().Length <= 0)
+        if (Input.GetJoystickNames().Length > 0)
         {
-            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"), Input.GetAxis("RightJoystickVertical1"), 0);
+            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"),-( Input.GetAxis("RightJoystickVertical1")), 0);
             FiringDirection *= 10;
         }
         else

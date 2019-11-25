@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class UI : MonoBehaviour
+public class UIMainMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject mainMenuUI;
-
     [SerializeField]
     private GameObject gameSettingsUI;
-
     [SerializeField]
     private GameObject controlUI;
+
+    [SerializeField]
+    private Toggle level1;
+    [SerializeField]
+    private Toggle level2;
+    [SerializeField]
+    private Toggle level3;
 
 
     public void onClickPlay()
@@ -37,6 +43,22 @@ public class UI : MonoBehaviour
         mainMenuUI.SetActive(true);
         controlUI.SetActive(false);
         gameSettingsUI.SetActive(false);
+    }
+
+    public void chooseStage()
+    {
+        if (level1.isOn)
+        {
+            SceneManager.LoadScene("MistyMountains");
+        }
+        else if (level2.isOn)
+        {
+            SceneManager.LoadScene("TommyStage");
+        }
+        else if (level3.isOn)
+        {
+            SceneManager.LoadScene("SunnyBeach");
+        }
     }
 }
 
