@@ -6,11 +6,13 @@ public class CustomGravity : MonoBehaviour
 {
 
     [SerializeField]
-    float gravityScale = 3.0f;
+    private float gravityScale = 3.0f;
 
     private static float globalGravity = -9.81f;
 
     private Rigidbody rb;
+
+    public float GravityScale { get => gravityScale; set => gravityScale = value; }
 
     void Start()
     {
@@ -20,7 +22,7 @@ public class CustomGravity : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+        Vector3 gravity = globalGravity * GravityScale * Vector3.up;
         rb.AddForce(gravity, ForceMode.Acceleration);
     }
 }
