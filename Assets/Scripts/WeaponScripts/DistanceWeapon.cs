@@ -14,7 +14,9 @@ public class DistanceWeapon : MonoBehaviour
     protected int Damage { get; set; }
     [SerializeField]
     protected float FiringRate { get; set; }
+    [SerializeField]
     protected int FiringStrength { get; set; }
+    protected float timeToReload;
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     public bool IsFiring { get => isFiring; set => isFiring = value; }
@@ -31,8 +33,14 @@ public class DistanceWeapon : MonoBehaviour
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    protected void reload()
+    protected IEnumerator reload()
     {
+        GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+        if (reloadBar != null)
+        {
+            if (reloadBar.transform.GetChild(0).TryGetComponent<ReloadProgressBar>(out ReloadProgressBar bar)) { bar.TimeToReload = timeToReload; }
+        }
+        yield return new WaitUntil(() => gameObject.activeSelf == true);
         CurrentAmmunition = Ammunition;
     }
 
@@ -56,12 +64,13 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
+    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
     {
         Ammunition = AmmunitionCount;
         this.Damage = Damage;
         this.FiringRate = FiringRate;
         this.FiringStrength = FiringStrength;
+        this.timeToReload = timeToReload;
         gameObject.AddComponent<Rigidbody>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
@@ -87,6 +96,7 @@ public class DistanceWeapon : MonoBehaviour
             aimWeapon();
             shoot();
         }
+        Debug.Log(gameObject.activeSelf);
     }
 
     protected virtual void WeaponFired()

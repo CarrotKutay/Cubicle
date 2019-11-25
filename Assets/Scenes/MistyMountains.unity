@@ -739,6 +739,7 @@ GameObject:
   - component: {fileID: 1240858442}
   - component: {fileID: 1240858441}
   - component: {fileID: 1240858438}
+  - component: {fileID: 1240858439}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Player
@@ -848,6 +849,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityScale: 3
+--- !u!114 &1240858439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240858432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d13db7503dcbe84d8a41949cb532b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7
+  jumpForce: 13
+  controllerNumber: 1
 --- !u!114 &1240858441
 MonoBehaviour:
   m_ObjectHideFlags: 0

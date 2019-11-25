@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
+
         // Sprung und Doppelsprung mit der Pfeiltaste nach oben.
         if (Input.GetButtonDown("Jump") && extraJumps == 2)
         {

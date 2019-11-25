@@ -41,8 +41,9 @@ public class Character : MonoBehaviour
             return null;
         }
     }
-    private bool checkingHealth;
+    private bool checkingHealth, #ing;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
+    public bool Reloading { get => reloading; set => reloading = value; }
 
     void equipWeapon(GameObject Weapon)
     {
@@ -188,6 +189,7 @@ public class Character : MonoBehaviour
         personalLayer = gameObject.layer;
         initSlots();
         checkingHealth = false;
+        Reloading = false;
         gameObject.layer = personalLayer;
         this.name = "Player";
     }
@@ -199,6 +201,11 @@ public class Character : MonoBehaviour
     }
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (!TryGetComponent<Rigidbody>(out Rigidbody __)) { gameObject.AddComponent<Rigidbody>(); }
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+    }
     void Start()
     {
         InitCharacter();
@@ -212,7 +219,8 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(healthcare());
         }
-        checkReload();
+        if (Reloading) { GameObject.FindGameObjectWithTag("ReloadBar").transform.position = transform.position; }
+        StartCoroutine(checkReload());
         checkActiveWeaponSwap();
     }
 
@@ -236,13 +244,29 @@ public class Character : MonoBehaviour
             changeActiveWeapon();
         }
     }
-
-
-    private void checkReload()
+    
+    private IEnumerator checkReload()
     {
         if (Input.GetButtonDown("Reload") || Input.GetAxis(reloadInput) > 0) 
         {
+            Reloading = true;
+            GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
+            reloadBar.transform.position = transform.position;
+            reloadBar.tag = "ReloadBar";
             getActiveWeapon.SendMessage("reload");
+            WeaponSlot1.IsActiveSlot = false;
+            WeaponSlot2.IsActiveSlot = false;
+            yield return new WaitForSeconds(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload);
+            if (WeaponSlot1.HoldsWeapon)
+            {
+                WeaponSlot1.IsActiveSlot = true;
+            }
+            else
+            {
+                WeaponSlot2.IsActiveSlot = true;
+            }
+            Destroy(reloadBar);
+            Reloading = false;
         }
     }
 
