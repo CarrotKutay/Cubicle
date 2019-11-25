@@ -34,6 +34,7 @@ public class Character : MonoBehaviour
     }
     private bool checkingHealth, reloading;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
+    public bool Reloading { get => reloading; set => reloading = value; }
 
     void equipWeapon(GameObject Weapon)
     {
@@ -174,7 +175,7 @@ public class Character : MonoBehaviour
         personalLayer = LayerMask.NameToLayer("Player1");
         initSlots();
         checkingHealth = false;
-        reloading = false;
+        Reloading = false;
         gameObject.layer = personalLayer;
         this.name = "Player";
     }
@@ -203,8 +204,8 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(healthcare());
         }
+        if (Reloading) { GameObject.FindGameObjectWithTag("ReloadBar").transform.position = transform.position; }
         StartCoroutine(checkReload());
-        if (reloading) { GameObject.FindGameObjectWithTag("ReloadBar").transform.position = transform.position; }
         checkActiveWeaponSwap();
     }
 
@@ -228,17 +229,26 @@ public class Character : MonoBehaviour
     }
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload") && !reloading)
+        if (Input.GetButtonDown("Reload") && !Reloading)
         {
-            reloading = true;
+            Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
             reloadBar.transform.position = transform.position;
             reloadBar.tag = "ReloadBar";
             getActiveWeapon.SendMessage("reload");
-            Debug.Log(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload.ToString());
+            WeaponSlot1.IsActiveSlot = false;
+            WeaponSlot2.IsActiveSlot = false;
             yield return new WaitForSeconds(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload);
+            if (WeaponSlot1.HoldsWeapon)
+            {
+                WeaponSlot1.IsActiveSlot = true;
+            }
+            else
+            {
+                WeaponSlot2.IsActiveSlot = true;
+            }
             Destroy(reloadBar);
-            reloading = false;
+            Reloading = false;
         }
     }
 }
