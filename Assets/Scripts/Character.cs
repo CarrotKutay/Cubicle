@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
             return null;
         }
     }
-    private bool checkingHealth;
+    private bool checkingHealth, reloading;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
 
     void equipWeapon(GameObject Weapon)
@@ -174,6 +174,7 @@ public class Character : MonoBehaviour
         personalLayer = LayerMask.NameToLayer("Player1");
         initSlots();
         checkingHealth = false;
+        reloading = false;
         gameObject.layer = personalLayer;
         this.name = "Player";
     }
@@ -202,7 +203,8 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(healthcare());
         }
-        checkReload();
+        StartCoroutine(checkReload());
+        if (reloading) { GameObject.FindGameObjectWithTag("ReloadBar").transform.position = transform.position; }
         checkActiveWeaponSwap();
     }
 
@@ -224,11 +226,19 @@ public class Character : MonoBehaviour
             changeActiveWeapon();
         }
     }
-    private void checkReload()
+    private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload") && !reloading)
         {
+            Debug.Log("Start reloading");
+            reloading = true;
+            GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
+            reloadBar.transform.position = transform.position;
+            reloadBar.tag = "ReloadBar";
             getActiveWeapon.SendMessage("reload");
+            yield return new WaitForSeconds(5f);
+            Destroy(reloadBar);
+            reloading = false;
         }
     }
 }

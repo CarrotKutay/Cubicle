@@ -30,7 +30,6 @@ public class MistyMountains : MonoBehaviour
         {
             gravity.GravityScale -= 0.1f * multiplier;
             yield return new WaitForSeconds(0.5f);
-            Debug.Log(gravity.GravityScale);
             if (gravity.GravityScale <= 1) { multiplier = -1; }
         } while (gravity.GravityScale != 3f);
     }

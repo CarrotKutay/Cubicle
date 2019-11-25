@@ -16,6 +16,7 @@ public class DistanceWeapon : MonoBehaviour
     protected float FiringRate { get; set; }
     [SerializeField]
     protected int FiringStrength { get; set; }
+    protected float timeToReload;
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     protected bool IsFiring { get => isFiring; set => isFiring = value; }
@@ -34,6 +35,12 @@ public class DistanceWeapon : MonoBehaviour
     /// </summary>
     protected void reload()
     {
+        GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+        if (reloadBar != null)
+        {
+            if (reloadBar.transform.GetChild(0).TryGetComponent<ReloadProgressBar>(out ReloadProgressBar bar)) { bar.TimeToReload = timeToReload; }
+        }
+
         CurrentAmmunition = Ammunition;
     }
 
@@ -57,12 +64,13 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)
+    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
     {
         Ammunition = AmmunitionCount;
         this.Damage = Damage;
         this.FiringRate = FiringRate;
         this.FiringStrength = FiringStrength;
+        this.timeToReload = timeToReload;
         gameObject.AddComponent<Rigidbody>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
