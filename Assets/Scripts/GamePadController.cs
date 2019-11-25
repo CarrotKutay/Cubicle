@@ -19,12 +19,16 @@ public class GamePadController : MonoBehaviour
 
     public int controllerNumber;
 
-    private string leftJoystickHor;
+    public string leftJoystickHor;
     private string aButton;
+    private Character character;
+
 
 
     void Start()
     {
+        character = GetComponent<Character>();
+
         rb = GetComponent<Rigidbody>();
         startPos.x = gameObject.transform.position.x;
         startPos.y = gameObject.transform.position.y;
@@ -35,13 +39,13 @@ public class GamePadController : MonoBehaviour
     {
         if (controllerNumber == 1)
         {
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
             aButton = "AButton" + controllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
         }
         else if (controllerNumber == 2)
         {
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
             aButton = "AButton" + controllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
         }
     }
 
@@ -68,6 +72,12 @@ public class GamePadController : MonoBehaviour
         {
             rb.velocity = Vector2.up * 0;
         }
+
+        //throw weapon
+        if (Input.GetAxis("ThrowGP1") > 0 || Input.GetAxis("ThrowGP2") > 0)
+        {
+            character.throwWeapon();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -76,10 +86,5 @@ public class GamePadController : MonoBehaviour
         {
             extraJumps = 2;
         }
-    }
-
-    private void respawn()
-    {
-        gameObject.transform.position = startPos;
     }
 }

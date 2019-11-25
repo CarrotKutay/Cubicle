@@ -53,10 +53,9 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.layer != FiredFrom)
         {
-
             if (other.gameObject.TryGetComponent<Character>(out Character player))
             {
-                player.UpdateHealth(Damage);
+                player.UpdateHealth(-Damage);
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Collections;
 public class Character : MonoBehaviour
 {
     private int Health;
+    public int health { get => Health; set => Health = value; }
     private string Name;
     private float Speed;
     private LayerMask personalLayer;
@@ -154,7 +155,7 @@ public class Character : MonoBehaviour
     {
         Health = 100;
         Speed = 1;
-        personalLayer = LayerMask.NameToLayer("Player1");
+        personalLayer = gameObject.layer;
         initSlots();
         checkingHealth = false;
         gameObject.layer = personalLayer;
@@ -193,7 +194,7 @@ public class Character : MonoBehaviour
 
     private void checkReload()
     {
-        if (Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload") || Input.GetAxis("ReloadGP1") > 0 || Input.GetAxis("ReloadGP2") > 0) 
         {
             getActiveWeapon.SendMessage("reload");
         }

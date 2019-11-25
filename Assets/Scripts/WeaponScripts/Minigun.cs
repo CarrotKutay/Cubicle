@@ -20,5 +20,6 @@ public class Minigun : DistanceWeapon
     {
         Init(100, 1, 30, 0.05f);
         reload();
+
     }
 }

@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 startPos;
 
     [SerializeField]
-    float speed = 7;
+    private float speed = 7;
     [SerializeField]
-    float jumpForce = 13;
+    private float jumpForce = 13;
 
     private float moveInput;
 
