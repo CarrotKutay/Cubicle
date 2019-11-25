@@ -185,6 +185,11 @@ public class Character : MonoBehaviour
     }
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (!TryGetComponent<Rigidbody>(out Rigidbody __)) { gameObject.AddComponent<Rigidbody>(); }
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+    }
     void Start()
     {
         InitCharacter();

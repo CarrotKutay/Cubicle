@@ -14,6 +14,7 @@ public class DistanceWeapon : MonoBehaviour
     protected int Damage { get; set; }
     [SerializeField]
     protected float FiringRate { get; set; }
+    [SerializeField]
     protected int FiringStrength { get; set; }
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
@@ -41,16 +42,19 @@ public class DistanceWeapon : MonoBehaviour
     /// </summary>
     protected void getCursorPosition()
     {
-        FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        FiringDirection = new Vector3(
-            FiringDirection.x,
-            FiringDirection.y,
-            0);
-    }
-
-    protected void getJoystickDirection()
-    {
-
+        if (Input.GetJoystickNames().Length <= 0)
+        {
+            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"), Input.GetAxis("RightJoystickVertical1"), 0);
+            FiringDirection *= 10;
+        }
+        else
+        {
+            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            FiringDirection = new Vector3(
+                FiringDirection.x,
+                FiringDirection.y,
+                0);
+        }
     }
 
     protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate)

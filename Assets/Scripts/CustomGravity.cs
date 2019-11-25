@@ -12,7 +12,7 @@ public class CustomGravity : MonoBehaviour
 
     private Rigidbody rb;
 
-    void OnEnable()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
