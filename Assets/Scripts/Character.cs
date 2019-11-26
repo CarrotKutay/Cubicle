@@ -41,9 +41,10 @@ public class Character : MonoBehaviour
             return null;
         }
     }
-    private bool checkingHealth, #ing;
+    private bool checkingHealth, ing;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
     public bool Reloading { get => reloading; set => reloading = value; }
+    private bool reloading;
 
     void equipWeapon(GameObject Weapon)
     {
@@ -239,15 +240,22 @@ public class Character : MonoBehaviour
     {
         if (Input.GetButtonDown("Swap Weapon") || Input.GetButtonDown(swapInput))
         {
-            DistanceWeapon activeWeapon = getActiveWeapon.GetComponentInChildren<DistanceWeapon>();
-            activeWeapon.IsFiring = false;
-            changeActiveWeapon();
+            if (getActiveWeapon)
+            {
+                DistanceWeapon activeWeapon = getActiveWeapon.GetComponentInChildren<DistanceWeapon>();
+                activeWeapon.IsFiring = false;
+                changeActiveWeapon();
+            }
+            else
+            {
+                changeActiveWeapon();
+            }
         }
     }
     
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload") || Input.GetAxis(reloadInput) > 0) 
+        if (Input.GetButtonDown("Reload") || Input.GetButtonDown(reloadInput)) 
         {
             Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
