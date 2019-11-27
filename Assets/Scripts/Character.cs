@@ -13,7 +13,6 @@ public class Character : MonoBehaviour
 
     private string swapInput;
     private string reloadInput;
-    private string throwInput;
     private string pickUpInput;
     /// <summary>
     /// we are providing the option of holding two weapons which are interchangeable for the player to choose from and hold while carrying
@@ -283,6 +282,5 @@ public class Character : MonoBehaviour
         swapInput = "SwapGP" + controllerNum;
         pickUpInput = "XButton" + controllerNum;
         reloadInput = "ReloadGP" + controllerNum;
-        throwInput = "ThrowGP" + controllerNum;
     }
 }

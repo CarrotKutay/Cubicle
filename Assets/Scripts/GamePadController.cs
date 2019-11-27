@@ -19,11 +19,10 @@ public class GamePadController : MonoBehaviour
 
     public int controllerNumber;
 
-    public string leftJoystickHor;
+    private string throwInput;
+    private string leftJoystickHor;
     private string aButton;
     private Character character;
-
-
 
     void Start()
     {
@@ -41,11 +40,13 @@ public class GamePadController : MonoBehaviour
         {
             aButton = "AButton" + controllerNumber;
             leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
+            throwInput = "ThrowGP" + controllerNumber;
         }
         else if (controllerNumber == 2)
         {
             aButton = "AButton" + controllerNumber;
             leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
+            throwInput = "ThrowGP" + controllerNumber;
         }
     }
 
@@ -74,7 +75,7 @@ public class GamePadController : MonoBehaviour
         }
 
         //throw weapon
-        if (Input.GetAxis("ThrowGP1") > 0 || Input.GetAxis("ThrowGP2") > 0)
+        if (Input.GetAxis(throwInput) > 0)
         {
             character.throwWeapon();
         }
