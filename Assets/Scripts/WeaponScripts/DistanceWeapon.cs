@@ -49,14 +49,17 @@ public class DistanceWeapon : MonoBehaviour
     /// </summary>
     protected void getCursorPosition()
     {
-        if (Input.GetJoystickNames().Length > 0)
+        GameObject player = transform.parent.parent.gameObject;
+
+
+        if (player.TryGetComponent<GamePadController>(out GamePadController controller))
         {
-            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"),-( Input.GetAxis("RightJoystickVertical1")), 0);
+            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal" + controller.ControllerNumber), -(Input.GetAxis("RightJoystickVertical" + controller.ControllerNumber)), 0);
             FiringDirection *= 10;
         }
         else
         {
-            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(player.transform.position);
             FiringDirection = new Vector3(
                 FiringDirection.x,
                 FiringDirection.y,

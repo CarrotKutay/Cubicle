@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using System.Collections;
 
 public class Character : MonoBehaviour
@@ -252,10 +251,10 @@ public class Character : MonoBehaviour
             }
         }
     }
-    
+
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload") || Input.GetButtonDown(reloadInput)) 
+        if (Input.GetButtonDown("Reload") || Input.GetButtonDown(reloadInput))
         {
             Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);

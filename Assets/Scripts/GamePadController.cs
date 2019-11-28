@@ -17,13 +17,13 @@ public class GamePadController : MonoBehaviour
 
     private Rigidbody rb;
 
-    public int controllerNumber;
+    private int controllerNumber;
 
     public string leftJoystickHor;
     private string aButton;
     private Character character;
 
-
+    public int ControllerNumber { get => controllerNumber; set => controllerNumber = value; }
 
     void Start()
     {
@@ -37,15 +37,15 @@ public class GamePadController : MonoBehaviour
 
     void setControllerToPlayer()
     {
-        if (controllerNumber == 1)
+        if (ControllerNumber == 1)
         {
-            aButton = "AButton" + controllerNumber;
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
         }
-        else if (controllerNumber == 2)
+        else if (ControllerNumber == 2)
         {
-            aButton = "AButton" + controllerNumber;
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
         }
     }
 
