@@ -8,7 +8,6 @@ public class Character : MonoBehaviour
     private string Name;
     private float Speed;
     private GamePadController controller;
-    public int controllerNum;
     private LayerMask personalLayer;
 
     private string swapInput;
@@ -285,11 +284,11 @@ public class Character : MonoBehaviour
         if (TryGetComponent<GamePadController>(out GamePadController cgp))
         {
             Controller = cgp;
-            swapInput = "SwapGP" + Controller.controllerNumber;
-            pickUpInput = "XButton" + controllerNum;
-            reloadInput = "ReloadGP" + controllerNum;
+            swapInput = "SwapGP" + Controller.ControllerNumber;
+            pickUpInput = "XButton" + Controller.ControllerNumber;
+            reloadInput = "ReloadGP" + Controller.ControllerNumber;
         }
-        else if (TryGetComponent<PlayerController>(out PlayerController pc))
+        else if (TryGetComponent<PlayerController>(out PlayerController _))
         {
             swapInput = "Swap Weapon";
             pickUpInput = "PickUp";

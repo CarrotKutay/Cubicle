@@ -24,11 +24,8 @@ public class GamePadController : MonoBehaviour
     private string aButton;
     private Character character;
 
-<<<<<<< HEAD
-=======
     public int ControllerNumber { get => controllerNumber; set => controllerNumber = value; }
 
->>>>>>> updateControllsForFiring
     void Start()
     {
         character = GetComponent<Character>();
@@ -43,17 +40,17 @@ public class GamePadController : MonoBehaviour
     {
         if (ControllerNumber == 1)
         {
-            aButton = "AButton" + controllerNumber;
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
-            throwInput = "ThrowGP" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
+            throwInput = "ThrowGP" + ControllerNumber;
             aButton = "AButton" + ControllerNumber;
             leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
         }
         else if (ControllerNumber == 2)
         {
-            aButton = "AButton" + controllerNumber;
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
-            throwInput = "ThrowGP" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
+            throwInput = "ThrowGP" + ControllerNumber;
 
             aButton = "AButton" + ControllerNumber;
             leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
