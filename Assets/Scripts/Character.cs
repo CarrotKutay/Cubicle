@@ -290,6 +290,7 @@ public class Character : MonoBehaviour
         }
         else if (TryGetComponent<PlayerController>(out PlayerController _))
         {
+            Debug.Log("Character is using player controlls");
             swapInput = "Swap Weapon";
             pickUpInput = "PickUp";
             reloadInput = "Reload";

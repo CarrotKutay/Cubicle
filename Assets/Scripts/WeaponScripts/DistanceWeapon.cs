@@ -79,6 +79,7 @@ public class DistanceWeapon : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
         isFiring = false;
         equipped = false;
+        gameObject.tag = "Weapon";
     }
 
     ///<summary>
@@ -99,7 +100,6 @@ public class DistanceWeapon : MonoBehaviour
             aimWeapon();
             shoot();
         }
-        Debug.Log(gameObject.activeSelf);
     }
 
     protected virtual void WeaponFired()
