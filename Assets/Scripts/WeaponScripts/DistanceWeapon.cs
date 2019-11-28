@@ -7,6 +7,7 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
 {
     private bool isFiring, equipped;
     private GameObject ptBody;
+    private string fireButton;
     protected int ammunition;
     [SerializeField]
     protected int currentAmmunition;
@@ -20,7 +21,7 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
     public bool IsFiring { get => isFiring; set => isFiring = value; }
-    public bool Equipped { get => equipped; set => equipped = value; }
+    public bool Equipped { get => equipped; set { equipped = value; } }
     public GameObject PTBody { get => ptBody; set => ptBody = value; }
     public int CurrentAmmunition { get => currentAmmunition; set => currentAmmunition = value; }
     public int Ammunition { get => ammunition; set => ammunition = value; }
@@ -36,7 +37,6 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
     /// </summary>
     public IEnumerator reload()
     {
-        Debug.Log("called");
         GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
         if (reloadBar != null)
         {
@@ -82,6 +82,24 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
         isFiring = false;
         equipped = false;
         gameObject.tag = "Weapon";
+    }
+
+    private void setInputs()
+    {
+        if (transform.parent.parent.gameObject.TryGetComponent<GamePadController>(out GamePadController cgp))
+        {
+            fireButton = "RightTrigger" + cgp.ControllerNumber;
+        }
+        else if (transform.parent.parent.gameObject.TryGetComponent<PlayerController>(out PlayerController _))
+        {
+            fireButton = "0";
+        }
+
+    }
+
+    private bool checkForGamePad()
+    {
+        return transform.parent.parent.gameObject.TryGetComponent<GamePadController>(out GamePadController _);
     }
 
     ///<summary>
@@ -142,11 +160,21 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
     protected IEnumerator checkButtonFired()
     {
         IsFiring = true;
-
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger1") > 0 || Input.GetAxis("RightTrigger2") > 0)
+        if (checkForGamePad())
         {
-            WeaponFired();
-            yield return new WaitForSeconds(FiringRate);
+            if (Input.GetAxis(fireButton) > 0 || Input.GetAxis(fireButton) > 0)
+            {
+                WeaponFired();
+                yield return new WaitForSeconds(FiringRate);
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButton(int.Parse(fireButton)) || Input.GetMouseButtonDown(int.Parse(fireButton)))
+            {
+                WeaponFired();
+                yield return new WaitForSeconds(FiringRate);
+            }
         }
 
         IsFiring = false;
@@ -164,6 +192,7 @@ public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
         else
         {
             equipped = true;
+            setInputs();
         }
     }
 }
