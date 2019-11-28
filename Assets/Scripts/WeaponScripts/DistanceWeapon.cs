@@ -40,7 +40,7 @@ public class DistanceWeapon : MonoBehaviour
         {
             if (reloadBar.transform.GetChild(0).TryGetComponent<ReloadProgressBar>(out ReloadProgressBar bar)) { bar.TimeToReload = timeToReload; }
         }
-        yield return new WaitUntil(() => gameObject.activeSelf == true);
+        yield return new WaitForSeconds(timeToReload);
         CurrentAmmunition = Ammunition;
     }
 
