@@ -15,28 +15,22 @@ public class HealthCube : MonoBehaviour
 
     Shader Shader;
     Material HealthCubeMaterial;
-    
-    void Init(int Value, Vector3 HitPosition)
+
+    void Init(int Value)
     {
         this.Value = Value;
         Scale = 0.5f * (Value / 25f); // 0.5 = size of a normal Cube character = 100 % Health
         Debug.Log(Value);
-        
-        if (HealthCubeMaterial != null) Debug.Log("Loaded successfully");
-        
-        //adding cube
-        Body = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Body.transform.position = HitPosition;
-        Body.transform.parent = transform; // remove once auto generation is possible
 
-        //scaling gameObject
-        transform.localScale = new Vector3(Scale, Scale, Scale);
+        //adding cube
+        Body = gameObject;
+        Body.transform.parent = transform; // remove once auto generation is possible
 
         //adding components
         Body.AddComponent<BoxCollider>();
         Body.AddComponent<Light>();
         Body.AddComponent<MeshRenderer>();
-        
+
         //material setup
         HealthCubeRenderer = Body.GetComponent<MeshRenderer>();
         HealthCubeRenderer.enabled = true;
@@ -48,11 +42,10 @@ public class HealthCube : MonoBehaviour
         PointLightGlow.transform.parent = Body.transform;
         PointLightGlow.transform.localPosition = Vector3.zero;
         PointLightGlow.type = LightType.Point;
-        PointLightGlow.color = new Color(54/256f, 170/256f, 10/256f);
+        PointLightGlow.color = new Color(54 / 256f, 170 / 256f, 10 / 256f);
         PointLightGlow.range = 4;
 
         //adding RigidBody
-        gameObject.AddComponent<Rigidbody>();
         RigidBody = GetComponent<Rigidbody>();
         RigidBody.constraints = RigidbodyConstraints.FreezePositionZ;
     }
@@ -60,7 +53,7 @@ public class HealthCube : MonoBehaviour
     private void Start()
     {
         HealthCubeMaterial = Resources.Load<Material>("TranslucentMat_green");
-        Init(10, new Vector3(0,-2,0));
+        Init(10);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -69,7 +62,9 @@ public class HealthCube : MonoBehaviour
         {
             GameObject Player = collision.collider.gameObject;
             Player.GetComponent<Character>().UpdateHealth(Value);
-            Destroy(this.Body);
+            Destroy(Body);
+            SpawnManager manager = GameObject.FindGameObjectWithTag("ArenaManager").GetComponent<SpawnManager>();
+            manager.ObjectList.Remove(Body);
         }
     }
 }
