@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Minigun : DistanceWeapon
+public class Minigun : DistanceWeapon, IDistanceWeapon
 {
     private Projectile projectile;
     protected override void addProjectile()

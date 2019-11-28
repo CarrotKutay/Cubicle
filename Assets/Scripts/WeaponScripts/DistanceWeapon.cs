@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DistanceWeapon : MonoBehaviour
+public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
 {
     private bool isFiring, equipped;
     private GameObject ptBody;
+    private string fireButton;
     protected int ammunition;
     [SerializeField]
     protected int currentAmmunition;
@@ -19,8 +20,8 @@ public class DistanceWeapon : MonoBehaviour
     protected float timeToReload;
     protected Rigidbody Rb { get => rb; set => rb = value; }
     public Vector3 FiringDirection { get => firingDirection; set => firingDirection = value; }
-    protected bool IsFiring { get => isFiring; set => isFiring = value; }
-    public bool Equipped { get => equipped; set => equipped = value; }
+    public bool IsFiring { get => isFiring; set => isFiring = value; }
+    public bool Equipped { get => equipped; set { equipped = value; } }
     public GameObject PTBody { get => ptBody; set => ptBody = value; }
     public int CurrentAmmunition { get => currentAmmunition; set => currentAmmunition = value; }
     public int Ammunition { get => ammunition; set => ammunition = value; }
@@ -28,12 +29,13 @@ public class DistanceWeapon : MonoBehaviour
     private Vector3 firingDirection;
     private Rigidbody rb;
 
+
     /// <summary>
     /// Restetting CurretAmmunition to the full Ammuntion. Work in progress: 
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    protected IEnumerator reload()
+    public IEnumerator reload()
     {
         GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
         if (reloadBar != null)
@@ -47,16 +49,19 @@ public class DistanceWeapon : MonoBehaviour
     /// <summary>
     /// getting a normalized direction from game object to cursor position in ScreenSpace
     /// </summary>
-    protected void getCursorPosition()
+    public void getCursorPosition()
     {
-        if (Input.GetJoystickNames().Length <= 0)
+        GameObject player = transform.parent.parent.gameObject;
+
+
+        if (player.TryGetComponent<GamePadController>(out GamePadController controller))
         {
-            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal1"), Input.GetAxis("RightJoystickVertical1"), 0);
+            FiringDirection = new Vector3(Input.GetAxis("RightJoystickHorizontal" + controller.ControllerNumber), -(Input.GetAxis("RightJoystickVertical" + controller.ControllerNumber)), 0);
             FiringDirection *= 10;
         }
         else
         {
-            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            FiringDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(player.transform.position);
             FiringDirection = new Vector3(
                 FiringDirection.x,
                 FiringDirection.y,
@@ -64,7 +69,7 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
+    public void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
     {
         Ammunition = AmmunitionCount;
         this.Damage = Damage;
@@ -76,6 +81,25 @@ public class DistanceWeapon : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
         isFiring = false;
         equipped = false;
+        gameObject.tag = "Weapon";
+    }
+
+    private void setInputs()
+    {
+        if (transform.parent.parent.gameObject.TryGetComponent<GamePadController>(out GamePadController cgp))
+        {
+            fireButton = "RightTrigger" + cgp.ControllerNumber;
+        }
+        else if (transform.parent.parent.gameObject.TryGetComponent<PlayerController>(out PlayerController _))
+        {
+            fireButton = "0";
+        }
+
+    }
+
+    private bool checkForGamePad()
+    {
+        return transform.parent.parent.gameObject.TryGetComponent<GamePadController>(out GamePadController _);
     }
 
     ///<summary>
@@ -136,11 +160,21 @@ public class DistanceWeapon : MonoBehaviour
     protected IEnumerator checkButtonFired()
     {
         IsFiring = true;
-
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger1") > 0 || Input.GetAxis("RightTrigger2") > 0)
+        if (checkForGamePad())
         {
-            WeaponFired();
-            yield return new WaitForSeconds(FiringRate);
+            if (Input.GetAxis(fireButton) > 0 || Input.GetAxis(fireButton) > 0)
+            {
+                WeaponFired();
+                yield return new WaitForSeconds(FiringRate);
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButton(int.Parse(fireButton)) || Input.GetMouseButtonDown(int.Parse(fireButton)))
+            {
+                WeaponFired();
+                yield return new WaitForSeconds(FiringRate);
+            }
         }
 
         IsFiring = false;
@@ -158,6 +192,7 @@ public class DistanceWeapon : MonoBehaviour
         else
         {
             equipped = true;
+            setInputs();
         }
     }
 }

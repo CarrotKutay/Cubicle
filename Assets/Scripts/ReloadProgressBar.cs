@@ -6,9 +6,9 @@ public class ReloadProgressBar : MonoBehaviour
 {
     private float currentProgress = 0;
     public float dampening = 5f;
-    public float changeSpeed = .5f;
+    // public float changeSpeed = .5f;
     private float timeToReload;
-    float timeout = 0f;
+    // float timeout = 0f;
     float activationpoint;
     Material mat;
     float fillTarget = 0f;

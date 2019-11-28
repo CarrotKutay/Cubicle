@@ -17,14 +17,19 @@ public class GamePadController : MonoBehaviour
 
     private Rigidbody rb;
 
-    public int controllerNumber;
+    private int controllerNumber;
 
+    private string throwInput;
     private string leftJoystickHor;
     private string aButton;
+    private Character character;
 
+    public int ControllerNumber { get => controllerNumber; set => controllerNumber = value; }
 
     void Start()
     {
+        character = GetComponent<Character>();
+
         rb = GetComponent<Rigidbody>();
         startPos.x = gameObject.transform.position.x;
         startPos.y = gameObject.transform.position.y;
@@ -33,15 +38,22 @@ public class GamePadController : MonoBehaviour
 
     void setControllerToPlayer()
     {
-        if (controllerNumber == 1)
+        if (ControllerNumber == 1)
         {
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
-            aButton = "AButton" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
+            throwInput = "ThrowGP" + ControllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
         }
-        else if (controllerNumber == 2)
+        else if (ControllerNumber == 2)
         {
-            leftJoystickHor = "LeftJoystickHorizontal" + controllerNumber;
-            aButton = "AButton" + controllerNumber;
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
+            throwInput = "ThrowGP" + ControllerNumber;
+
+            aButton = "AButton" + ControllerNumber;
+            leftJoystickHor = "LeftJoystickHorizontal" + ControllerNumber;
         }
     }
 
@@ -68,6 +80,12 @@ public class GamePadController : MonoBehaviour
         {
             rb.velocity = Vector2.up * 0;
         }
+
+        //throw weapon
+        if (Input.GetAxis(throwInput) > 0)
+        {
+            character.throwWeapon();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -76,10 +94,5 @@ public class GamePadController : MonoBehaviour
         {
             extraJumps = 2;
         }
-    }
-
-    private void respawn()
-    {
-        gameObject.transform.position = startPos;
     }
 }
