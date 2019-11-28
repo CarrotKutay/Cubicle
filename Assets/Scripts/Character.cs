@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using System.Collections;
 
 public class Character : MonoBehaviour
@@ -8,6 +7,7 @@ public class Character : MonoBehaviour
     public int health { get => Health; set => Health = value; }
     private string Name;
     private float Speed;
+    private GamePadController controller;
     public int controllerNum;
     private LayerMask personalLayer;
 
@@ -43,6 +43,8 @@ public class Character : MonoBehaviour
     private bool checkingHealth, ing;
     public LayerMask PersonalLayer { get => personalLayer; set => personalLayer = value; }
     public bool Reloading { get => reloading; set => reloading = value; }
+    public GamePadController Controller { get => controller; set => controller = value; }
+
     private bool reloading;
 
     void equipWeapon(GameObject Weapon)
@@ -205,11 +207,12 @@ public class Character : MonoBehaviour
     {
         if (!TryGetComponent<Rigidbody>(out Rigidbody __)) { gameObject.AddComponent<Rigidbody>(); }
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+
+        setInputs();
     }
     void Start()
     {
         InitCharacter();
-        setJoystickInputs();
     }
 
     // Update is called once per frame
@@ -228,7 +231,7 @@ public class Character : MonoBehaviour
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("Arena"))
         {
-            if (Input.GetButtonDown("PickUp") || Input.GetButtonDown(pickUpInput))
+            if (Input.GetButtonDown(pickUpInput))
             {
                 pickUp(other.gameObject);
             }
@@ -237,7 +240,7 @@ public class Character : MonoBehaviour
 
     private void checkActiveWeaponSwap()
     {
-        if (Input.GetButtonDown("Swap Weapon") || Input.GetButtonDown(swapInput))
+        if (Input.GetButtonDown(swapInput))
         {
             if (getActiveWeapon)
             {
@@ -251,10 +254,10 @@ public class Character : MonoBehaviour
             }
         }
     }
-    
+
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown("Reload") || Input.GetButtonDown(reloadInput)) 
+        if (Input.GetButtonDown(reloadInput))
         {
             Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
@@ -277,10 +280,21 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void setJoystickInputs()
+    private void setInputs()
     {
-        swapInput = "SwapGP" + controllerNum;
-        pickUpInput = "XButton" + controllerNum;
-        reloadInput = "ReloadGP" + controllerNum;
+        if (TryGetComponent<GamePadController>(out GamePadController cgp))
+        {
+            Controller = cgp;
+            swapInput = "SwapGP" + Controller.controllerNumber;
+            pickUpInput = "XButton" + controllerNum;
+            reloadInput = "ReloadGP" + controllerNum;
+        }
+        else if (TryGetComponent<PlayerController>(out PlayerController pc))
+        {
+            swapInput = "Swap Weapon";
+            pickUpInput = "PickUp";
+            reloadInput = "Reload";
+        }
+
     }
 }
