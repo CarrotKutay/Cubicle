@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DistanceWeapon : MonoBehaviour
+public class DistanceWeapon : MonoBehaviour, IDistanceWeapon
 {
     private bool isFiring, equipped;
     private GameObject ptBody;
@@ -28,13 +28,15 @@ public class DistanceWeapon : MonoBehaviour
     private Vector3 firingDirection;
     private Rigidbody rb;
 
+
     /// <summary>
     /// Restetting CurretAmmunition to the full Ammuntion. Work in progress: 
     /// Update (1) Implement reloading time
     /// Update (2) Implement Visual Cue / Animation
     /// </summary>
-    protected IEnumerator reload()
+    public IEnumerator reload()
     {
+        Debug.Log("called");
         GameObject reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
         if (reloadBar != null)
         {
@@ -47,7 +49,7 @@ public class DistanceWeapon : MonoBehaviour
     /// <summary>
     /// getting a normalized direction from game object to cursor position in ScreenSpace
     /// </summary>
-    protected void getCursorPosition()
+    public void getCursorPosition()
     {
         GameObject player = transform.parent.parent.gameObject;
 
@@ -67,7 +69,7 @@ public class DistanceWeapon : MonoBehaviour
         }
     }
 
-    protected void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
+    public void Init(int AmmunitionCount, int Damage, int FiringStrength, float FiringRate, float timeToReload)
     {
         Ammunition = AmmunitionCount;
         this.Damage = Damage;

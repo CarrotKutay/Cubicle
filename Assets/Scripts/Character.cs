@@ -261,11 +261,10 @@ public class Character : MonoBehaviour
             Reloading = true;
             GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
             reloadBar.transform.position = transform.position;
-            reloadBar.tag = "ReloadBar";
-            getActiveWeapon.SendMessage("reload");
+            IDistanceWeapon weapon = getActiveWeapon.GetComponent<IDistanceWeapon>() as IDistanceWeapon;
             WeaponSlot1.IsActiveSlot = false;
             WeaponSlot2.IsActiveSlot = false;
-            yield return new WaitForSeconds(reloadBar.transform.GetChild(0).GetComponent<ReloadProgressBar>().TimeToReload);
+            yield return StartCoroutine(weapon.reload());
             if (WeaponSlot1.HoldsWeapon)
             {
                 WeaponSlot1.IsActiveSlot = true;

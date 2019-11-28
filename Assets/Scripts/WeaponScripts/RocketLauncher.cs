@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketLauncher : DistanceWeapon
+public class RocketLauncher : DistanceWeapon, IDistanceWeapon
 {
     private RocketLauncherProjectile projectile;
     protected override void addProjectile()

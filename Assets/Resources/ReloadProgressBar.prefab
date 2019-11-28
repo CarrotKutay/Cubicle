@@ -108,7 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampening: 5
-  changeSpeed: 0.5
 --- !u!1 &6080211683485011479
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +119,7 @@ GameObject:
   - component: {fileID: 6080211683485011473}
   m_Layer: 0
   m_Name: ReloadProgressBar
-  m_TagString: Untagged
+  m_TagString: ReloadBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
