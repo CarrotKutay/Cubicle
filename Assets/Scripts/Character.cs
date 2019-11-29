@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     public int health { get => Health; set => Health = value; }
     private string Name;
     private float Speed;
+    private Vector3 startSize;
     private GamePadController controller;
     private LayerMask personalLayer;
 
@@ -99,7 +100,10 @@ public class Character : MonoBehaviour
 
     public void pickUp(GameObject obj)
     {
-        equipWeapon(obj);
+        if (!WeaponSlot1.HoldsWeapon || !WeaponSlot2.HoldsWeapon)
+        {
+            equipWeapon(obj);
+        }
     }
 
     void DropWeapon()
@@ -173,11 +177,19 @@ public class Character : MonoBehaviour
     /// <param name="Updatevalue"></param>
     public void UpdateHealth(int UpdateValue)
     {
-        Debug.Log("Updated health by " + UpdateValue);
         Health += UpdateValue;
-        float newScale = transform.localScale.x + (UpdateValue / 200f);
-        float scaleSize = newScale < 0.25f ? 0.25f : newScale;
-        transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
+
+        if (Health >= 100)
+        {
+            Health = 100;
+            transform.localScale = startSize;
+        }
+        else
+        {
+            float newScale = transform.localScale.x + (UpdateValue / 200f);
+            float scaleSize = newScale < 0.25f ? 0.25f : newScale;
+            transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
+        }
     }
 
     /// <summary>
@@ -193,6 +205,7 @@ public class Character : MonoBehaviour
         Reloading = false;
         gameObject.layer = personalLayer;
         this.name = "Player";
+        startSize = gameObject.transform.localScale;
     }
 
     private void initSlots()
@@ -256,26 +269,30 @@ public class Character : MonoBehaviour
 
     private IEnumerator checkReload()
     {
-        if (Input.GetButtonDown(reloadInput))
+        if (getActiveWeapon)
         {
-            Reloading = true;
-            GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
-            reloadBar.transform.position = transform.position;
-            IDistanceWeapon weapon = getActiveWeapon.GetComponent<IDistanceWeapon>() as IDistanceWeapon;
-            WeaponSlot1.IsActiveSlot = false;
-            WeaponSlot2.IsActiveSlot = false;
-            yield return StartCoroutine(weapon.reload());
-            if (WeaponSlot1.HoldsWeapon)
+            if (Input.GetButtonDown(reloadInput))
             {
-                WeaponSlot1.IsActiveSlot = true;
+                Reloading = true;
+                GameObject reloadBar = GameObject.Instantiate(Resources.Load<GameObject>("ReloadProgressBar"), Vector3.zero, Quaternion.identity);
+                reloadBar.transform.position = transform.position;
+                IDistanceWeapon weapon = getActiveWeapon.GetComponent<IDistanceWeapon>() as IDistanceWeapon;
+                WeaponSlot1.IsActiveSlot = false;
+                WeaponSlot2.IsActiveSlot = false;
+                yield return StartCoroutine(weapon.reload());
+                if (WeaponSlot1.HoldsWeapon)
+                {
+                    WeaponSlot1.IsActiveSlot = true;
+                }
+                else
+                {
+                    WeaponSlot2.IsActiveSlot = true;
+                }
+                Destroy(reloadBar);
+                Reloading = false;
             }
-            else
-            {
-                WeaponSlot2.IsActiveSlot = true;
-            }
-            Destroy(reloadBar);
-            Reloading = false;
         }
+
     }
 
     private void setInputs()
