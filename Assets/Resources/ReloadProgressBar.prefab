@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6080211682774516458}
   - component: {fileID: 6080211682774516457}
   - component: {fileID: 6080211682774516456}
-  - component: {fileID: 6316318213275622678}
+  - component: {fileID: 8452301220462594769}
   m_Layer: 0
   m_Name: BarPlane
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6316318213275622678
+--- !u!114 &8452301220462594769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

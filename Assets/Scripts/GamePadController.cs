@@ -17,6 +17,7 @@ public class GamePadController : MonoBehaviour
 
     private Rigidbody rb;
 
+    [SerializeField]
     private int controllerNumber;
 
     private string throwInput;
