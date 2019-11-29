@@ -20,7 +20,6 @@ public class HealthCube : MonoBehaviour
     {
         this.Value = Value;
         Scale = 0.5f * (Value / 25f); // 0.5 = size of a normal Cube character = 100 % Health
-        Debug.Log(Value);
 
         //adding cube
         Body = gameObject;
@@ -62,9 +61,9 @@ public class HealthCube : MonoBehaviour
         {
             GameObject Player = collision.collider.gameObject;
             Player.GetComponent<Character>().UpdateHealth(Value);
-            Destroy(Body);
             SpawnManager manager = GameObject.FindGameObjectWithTag("ArenaManager").GetComponent<SpawnManager>();
             manager.ObjectList.Remove(Body);
+            Destroy(Body);
         }
     }
 }

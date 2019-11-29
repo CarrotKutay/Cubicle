@@ -45,7 +45,7 @@ public class UIMainMenu : MonoBehaviour
         gameSettingsUI.SetActive(false);
     }
 
-    public void chooseStage()
+    public void onClickStartGame()
     {
         if (level1.isOn)
         {
