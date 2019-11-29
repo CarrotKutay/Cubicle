@@ -830,6 +830,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 33000013633443264, guid: 7bd61b5c3d150484fa9a39ddafeebe90,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 760203404191187455, guid: c07feac70487ec746b8ccba3b47411b2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bd61b5c3d150484fa9a39ddafeebe90, type: 3}
 --- !u!4 &88342265 stripped
@@ -1913,7 +1919,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1829623553}
-        m_MethodName: Resume
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6232,6 +6238,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 33000013633443264, guid: 7bd61b5c3d150484fa9a39ddafeebe90,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 760203404191187455, guid: c07feac70487ec746b8ccba3b47411b2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bd61b5c3d150484fa9a39ddafeebe90, type: 3}
 --- !u!4 &1533154287 stripped
