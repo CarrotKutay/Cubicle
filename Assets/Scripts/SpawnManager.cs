@@ -65,7 +65,6 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject obj;
         Vector3 rdm = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(-2.0f, 2.0f), 0);
-        Debug.Log(type);
         if (type.Equals("DistanceWeapon"))
         {
             int randNum = Random.Range(0, 2);

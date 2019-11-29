@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6947027585993689937}
   - component: {fileID: 5749839452689264916}
   - component: {fileID: 808790798366412807}
-  - component: {fileID: 534102436320652381}
+  - component: {fileID: 7099001498704472253}
   m_Layer: 0
   m_Name: MiniGun
   m_TagString: Weapon
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e8b99e12fdc9c4b4ebe273a834e4bdee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &534102436320652381
+--- !u!114 &7099001498704472253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1952979485725884090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129da21d0fb8db14f95d8779577ba7c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0584606dabe9d4c45905e83c3a102534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentAmmunition: 0

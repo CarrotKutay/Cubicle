@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 472402356340644519}
   - component: {fileID: 345131414225549271}
   - component: {fileID: 2719267490080905645}
-  - component: {fileID: 4514966885369968534}
+  - component: {fileID: 1240063973612634232}
   m_Layer: 0
   m_Name: RocketLauncher
   m_TagString: Weapon
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 94f27c9d88acaf145bc37e2c2d35329a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4514966885369968534
+--- !u!114 &1240063973612634232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2085023782153597062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f5e58082d534e44a23fa1273a58d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f654bf6eb2a07d448bcd4ccd59df095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentAmmunition: 0
