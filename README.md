@@ -76,3 +76,4 @@ All weapons have basic values for 'Firing strength', 'Firing Rate' and 'Damage'
 ***
 #### Input:
 Keyboard/Gamepads -> see in game description of 'how to play'
+![alt text](https://github.com/CarrotKutay/Cubicle/blob/master/Assets/Materials/Sprites/controller.JPG)
