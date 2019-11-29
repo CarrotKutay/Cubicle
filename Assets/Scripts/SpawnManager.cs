@@ -22,16 +22,16 @@ public class SpawnManager : MonoBehaviour
     {
         if (ObjectList.Count < 5)
         {
-            StartCoroutine(spawn());
-            objCheck();
+            StartCoroutine(spawn());           
         }
+        objCheck();
     }
 
     private void objCheck()
     {
         foreach (var obj in ObjectList)
         {
-            if (obj.transform.position.y < -10)
+            if (obj.transform.position.y < -5)
             {
                 ObjectList.Remove(obj);
                 Destroy(obj);
@@ -50,8 +50,8 @@ public class SpawnManager : MonoBehaviour
 
     private string chooseSpawn()
     {
-        int number = Random.Range(0, 9);
-        if (number < 3)
+        int number = Random.Range(0, 10);
+        if (number < 4)
         {
             return "DistanceWeapon";
         }
@@ -64,24 +64,25 @@ public class SpawnManager : MonoBehaviour
     private IEnumerator spawnObject(string type)
     {
         GameObject obj;
+        Vector3 rdm = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(-2.0f, 2.0f), 0);
         if (type.Equals("DistanceWeapon"))
         {
             int randNum = Random.Range(0, 2);
             if (randNum == 0)
             {
-                obj = Instantiate(Resources.Load<GameObject>("MiniGun"), Vector3.zero, Quaternion.identity);
+                obj = Instantiate(Resources.Load<GameObject>("MiniGun"), rdm, Quaternion.identity);
             }
             else
             {
-                obj = Instantiate(Resources.Load<GameObject>("RocketLauncher"), Vector3.zero, Quaternion.identity);
+                obj = Instantiate(Resources.Load<GameObject>("RocketLauncher"), rdm, Quaternion.identity);
             }
         }
         else
         {
-            obj = Instantiate(Resources.Load<GameObject>("Healthcube"), Vector3.zero, Quaternion.identity);
+            obj = Instantiate(Resources.Load<GameObject>("Healthcube"), new Vector3(5,5,0), Quaternion.identity);
         }
         ObjectList.Add(obj);
-        yield return new WaitForSeconds(Random.Range(2, 10));
+        yield return new WaitForSeconds(Random.Range(5, 8));
     }
 
 }
