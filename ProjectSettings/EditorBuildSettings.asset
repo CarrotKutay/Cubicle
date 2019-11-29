@@ -7,11 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/UI/MainMenu.unity
-    guid: 40c17baab1b0b1c42939044c1960645d
+    guid: 05ca01c85ec5f6848bb1712e8815635e
   - enabled: 1
     path: Assets/Scenes/Levels/TommyStage.unity
-    guid: fa090b2cc24a62b47b38f7f8650204c6
+    guid: 9c8604ca3a1a84645bcb2e6cc1e7dfee
   - enabled: 1
     path: Assets/Scenes/Levels/MistyMountains.unity
-    guid: 19b51ebec41b653428f9374d57431fc0
+    guid: 3042b24afa7fc164380dcb63c78fa8fb
   m_configObjects: {}
