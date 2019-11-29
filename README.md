@@ -7,9 +7,9 @@ A 2.5D Cube Figure Fighting Game using Unity as a Game Engine.
 
 ***
 #### Tabele of Contents
-[Features to implement]
-[Weapon System]
-[Character System]
+[Features to implement] (#Features to implement)
+[Weapon System] (#Weapon System)
+[Character System] (#Character System)
 
 ***
 
