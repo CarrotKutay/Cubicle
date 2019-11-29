@@ -22,7 +22,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (ObjectList.Count < 5)
         {
-            StartCoroutine(spawn());           
+            StartCoroutine(spawn());
         }
         objCheck();
     }
@@ -65,6 +65,7 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject obj;
         Vector3 rdm = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(-2.0f, 2.0f), 0);
+        Debug.Log(type);
         if (type.Equals("DistanceWeapon"))
         {
             int randNum = Random.Range(0, 2);
@@ -79,7 +80,7 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-            obj = Instantiate(Resources.Load<GameObject>("Healthcube"), new Vector3(5,5,0), Quaternion.identity);
+            obj = Instantiate(Resources.Load<GameObject>("Healthcube"), rdm, Quaternion.identity);
         }
         ObjectList.Add(obj);
         yield return new WaitForSeconds(Random.Range(5, 8));
